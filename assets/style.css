@@ -1,0 +1,908 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos base (modo claro) */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e293b;
+  color: white;
+  padding: 15px 20px;
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header img {
+  width: 100px;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.navbar {
+  background: #334155;
+  padding: 10px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: #38bdf8;
+}
+
+main {
+  padding: 20px;
+  min-height: 70vh;
+}
+
+.footer {
+  text-align: center;
+  padding: 15px;
+  background: #1e293b;
+  color: white;
+  font-size: 14px;
+}
+
+/* 🌞 Estilo claro (por defecto) */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+main {
+  padding: 20px;
+  min-height: 70vh;
+  background: white;   /* Caja clara por defecto */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* 🌙 Estilo oscuro */
+body.dark {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+body.dark main {
+  background: #1e293b;   /* Fondo más oscuro para el contenido */
+  color: #e2e8f0;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+}
+
+/* Links dentro de las páginas */
+main a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+main a:hover {
+  text-decoration: underline;
+}
+
+body.dark main a {
+  color: #38bdf8; /* Azul claro en modo oscuro */
+}
+
+
+
+/* ---------- Estilo uniforme para páginas internas ---------- */
+
+/* Títulos */
+main h1, main h2, main h3 {
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+body.dark main h1,
+body.dark main h2,
+body.dark main h3 {
+  color: #f8fafc;
+}
+
+/* Párrafos */
+main p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+/* Listas */
+main ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 15px 0;
+}
+
+main ul li {
+  background: #f1f5f9;
+  margin-bottom: 10px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+main ul li:hover {
+  background: #e2e8f0;
+}
+
+body.dark main ul li {
+  background: #1e293b;
+}
+
+body.dark main ul li:hover {
+  background: #334155;
+}
+
+/* Links */
+main a {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+main a:hover {
+  text-decoration: underline;
+}
+
+body.dark main a {
+  color: #38bdf8;
+}
+
+/* Tarjetas corporativas */
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+body.dark .card {
+  background: #1e293b;
+  box-shadow: 0 3px 6px rgba(255,255,255,0.05);
+}
+
+
+/* ========================  ESTILOS DE ACCESOS  ======================== */
+.accesos-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 20px auto;
+  background: var(--bg-card);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 2px; /* ya reducido */
+  gap: 15px;
+}
+
+.accesos-container .left-panel,
+.accesos-container .right-panel {
+  flex: 1 1 450px;
+  display: flex;
+  flex-direction: column; 
+  gap: 10px;
+}
+
+.accesos-container input,
+.accesos-container textarea {
+  width: 90%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: var(--bg-input);
+  color: var(--text);
+  min-height: 5px; /* compacto */
+}
+
+.accesos-container input:focus,
+.accesos-container textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(0,123,255,0.2);
+  outline: none;
+}
+
+/* Botones */
+.accesos-container button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.copy-btn    { background: var(--primary); color: white; }
+.copy-btn:hover { opacity: 0.85; }
+
+.clear-btn   { background: var(--danger, #dc3545); color: white; }
+.clear-btn:hover { opacity: 0.85; }
+
+.generate-btn { background: var(--success, #28a745); color: white; }
+.generate-btn:hover { opacity: 0.85; }
+
+/* Cajas de información */
+.info-box {
+  border-radius: 19px;
+  padding: 15px 20px;
+  box-shadow: var(--shadow);
+  background: var(--bg-card-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* Teléfonos */
+.info-box.telefonos {
+  background: var(--bg-card);
+  width: 70%;
+  font-size: 14px;
+}
+
+.info-box.telefonos h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--primary);
+}
+
+.info-box.telefonos ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-box.telefonos li {
+  margin: 3px 0;
+}
+
+
+/* ========================  MASIVOS  ======================== */
+.masivos-container {
+  max-width: 1400px;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 20px;
+  color: var(--text);
+}
+
+.masivos-container h1 {
+  font-size: 22px;
+  margin: 0 0 8px 0;
+  grid-column: span 3;
+  color: var(--primary);
+}
+
+.masivos-container .lead {
+  color: var(--muted);
+  margin: 0 0 16px;
+  font-size: 14px;
+  grid-column: span 3;
+}
+
+.masivos-container .card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.masivos-container textarea {
+  width: 100%;
+  height: 150px;
+  background: var(--bg-input);
+  border: 1px dashed rgba(0,0,0,0.2);
+  color: var(--text);
+  padding: 10px;
+  border-radius: 8px;
+  font-family: Menlo, monospace;
+  font-size: 13px;
+}
+
+.masivos-container .controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.masivos-container button {
+  background: var(--primary);
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.masivos-container button.secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.masivos-container .output {
+  margin-top: 16px;
+}
+
+.masivos-container .group {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--bg-card-secondary);
+}
+
+.masivos-container .group h3 {
+  margin: 0 0 6px 0;
+  color: var(--primary);
+}
+
+.masivos-container .tik-item {
+  padding: 6px 8px;
+  margin: 4px 0;
+  background: var(--bg-input);
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.masivos-container .tik-item.destacado {
+  background: #2ecc71;
+  color: #04201a;
+  font-weight: 600;
+}
+
+.masivos-container .tik-item.seleccionado {
+  background: #3498db;
+  color: white;
+  font-weight: 600;
+}
+
+.masivos-container .muted {
+  color: var(--muted);
+  font-size: 13px;
+  margin-left: 6px;
+}
+
+#selectedZone {
+  border: 2px dashed var(--primary);
+  min-height: 200px;
+}
+
+#selectedList {
+  white-space: pre-wrap;
+  font-family: Menlo, monospace;
+  color: var(--text);
+  margin: 10px 0;
+}
+
+
+/* ================== SOLO TICKET ================== */
+
+/* Contenedor */
+.ticket-container {
+  max-width: 800px;
+  margin: 50px auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Botones */
+.ticket-container button {
+ background: var(--primary);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 90%;  
+  margin: 20px auto;
+}
+/* Boton Generara/Copiar color al pararse encima*/
+.ticket-container button:hover {
+  background-color: #0077cc;
+}
+/* Color del boton Borrar*/
+.ticket-container #borrarBtn {
+  background-color: transparent;
+}
+/* Boton Borrar color al pararse encima*/
+.ticket-container #borrarBtn:hover {
+  background-color: #ca2d2d;
+}
+
+/* Recuadro donde se genera el mensaje */
+.ticket-container .mensaje-recuadro {
+  border: 4px solid #004C88;
+  padding: 15px;
+  min-height: 200px;
+  white-space: pre-wrap;
+  border-radius: 10px;
+}
+
+/* === Tema claro (cuando body NO tiene .dark) === */
+body:not(.dark) .ticket-container .mensaje-recuadro {
+  background-color: #ffffff; /* blanco */
+  color: #222222;            /* texto oscuro */
+}
+
+/* === Tema oscuro === */
+body.dark .ticket-container .mensaje-recuadro {
+  background-color: #2d3748; /* gris oscuro */
+  color: #f4f4f4;            /* texto claro */
+}
+
+/* aumenta espacio entre cada elemento */
+.ticket-container form > label,
+.ticket-container form > input,
+.ticket-container form > select,
+.ticket-container form > .buttons {
+  margin-bottom: 20px; 
+}
+
+/* Recuadro desplegable de Idioma*/
+.ticket-container .input-group {
+  display: flex;
+  flex-direction: column; /* o row si quieres lado a lado */
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.ticket-container .input-group select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #131313;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.ticket-container .input-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Recuadro Número de Ticket*/
+.ticket-container .input-group {
+  display: flex;
+  flex-direction: column; /* puedes cambiar a row/Colum si quieres alinear horizontal */
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.ticket-container .input-group input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #131313;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.ticket-container .input-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+  outline: none;
+  background-color: transparent; /* opcional para resaltar */
+}
+
+
+
+
+
+
+/* ================ 
+===================
+Estilos VIPS 
+===================
+================ */
+/* Contenedor general */
+.archivos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: transparent;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 1100px;   /* ancho máximo */
+  width: 100%;        /* ocupa todo hasta llegar al máximo */
+  margin: 20px auto;  /* centrado horizontal */
+}
+
+/* Entrada manual */
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.input-box textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-box textarea:focus {
+  border: 1px solid #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* Grupo de botones */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* Colores de botones */
+#btn-vips-load {
+  background: #2563eb;
+  color: white;
+}
+#btn-vips-load:hover {
+  background: #1e40af;
+  transform: scale(1.02);
+}
+
+#btn-vips-clear {
+  background: #f87171;
+  color: white;
+}
+#btn-vips-clear:hover {
+  background: #dc2626;
+  transform: scale(1.02);
+}
+
+#btn-vips-copiar {
+  background: #10b981;
+  color: white;
+}
+#btn-vips-copiar:hover {
+  background: #047857;
+  transform: scale(1.02);
+}
+
+/* Vista previa horizontal */
+.preview-horizontal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+}
+
+.preview-celda {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+.preview-celda .titulo-celda {
+  font-size: 10px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.preview-celda .valor-celda {
+  font-size: 12px;
+  color: #111827;
+}
+
+/* Tabla de formato */
+.tabla-formato {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  text-rendering: 100px;
+  font-weight: bold;
+  margin-left: 50px;
+}
+
+.tabla-formato th {
+  text-align: left;
+  background: #1e3a8a;
+  color: white;
+  padding: 8px;
+  font-size: 18px;
+  width: 200px;
+}
+
+.tabla-formato td {
+  padding: 10px;
+  border: 2px solid #e5e7eb;
+  font-size: 15px;
+  color: #374151;
+}
+
+
+/* =================== MANUALES CSS =================== */
+.manuales-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  max-width: 800px;
+  margin: auto;
+}
+
+#buscador-manuales {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#lista-manuales {
+  list-style: none;
+  padding: 0;
+}
+
+#lista-manuales li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+#lista-manuales .acciones a {
+  margin-left: 12px;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+#lista-manuales .acciones a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+/* =========================
+   Sección: Scripts (limpio)
+   ========================= */
+
+/* -- Layout (modo claro por defecto) -- */
+.scripts-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: 1800px;
+  margin: 20px auto;
+  color: #111; /* texto base */
+}
+
+.dropdown-container {
+  flex: 1;
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fafafa;
+  color: inherit;
+}
+
+.dropdown-container h3 {
+  margin: 15px 0 10px;
+  font-size: 20px;   /* mantienes 18 si lo prefieres */
+  font-weight: 700;
+  color: #111;
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 6px;
+}
+
+.option-card {
+  background: transparent;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background .18s ease, transform .08s ease;
+  color: inherit;
+}
+
+.option-card:hover {
+  background: #f0f8ff;
+  transform: scale(1.02);
+}
+
+.option-card.active {
+  background: #0077cc;
+  color: #fff;
+  border-color: #005fa3;
+}
+
+.output-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#scriptOutput {
+  width: 100%;
+  min-height: 600px;
+  padding: 16px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  background-color:transparent;
+  color: #000000;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+#scriptOutput a { color: #0077cc; text-decoration: underline; }
+#scriptOutput a:hover { color: #005fa3; }
+#scriptOutput p { margin: 0 0 6px 0; line-height: 1.3; }
+
+#copyBtn {
+  align-self: flex-end;
+  padding: 10px 18px;
+  background-color: #0077cc;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#copyBtn:hover { background-color: #005fa3; }
+
+/* =========================
+   Modo oscuro (soporta .dark-mode y .dark)
+   ========================= */
+
+/* Agrupamos ambos nombres de clase para evitar problemas con el toggle */
+body.dark-mode .scripts-container,
+body.dark .scripts-container {
+  background-color: transparent;
+  color: #f8f8f8;
+  box-shadow: none;
+}
+
+/* Contenedores y subtítulos */
+body.dark-mode .dropdown-container,
+body.dark .dropdown-container {
+  background: transparent;           /* deja ver el fondo oscuro */
+  border-color: rgba(7, 7, 7, 0.06);
+  color: #000000;
+}
+
+body.dark-mode .dropdown-container h3,
+body.dark .dropdown-container h3 {
+  color: #e6eef6;
+  border-bottom-color: rgba(255,255,255,0.06);
+}
+
+/* Tarjetas (opciones) */
+body.dark-mode .option-card,
+body.dark .option-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #ffffff;
+}
+
+body.dark-mode .option-card:hover,
+body.dark .option-card:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+body.dark-mode .option-card.active,
+body.dark .option-card.active {
+  background: #0077cc;
+  color: #fff;
+  border-color: #005fa3;
+}
+
+/* Output y botón */
+body.dark-mode #scriptOutput,
+body.dark #scriptOutput {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.06);
+  color: #e6eef6;
+}
+
+body.dark-mode #copyBtn,
+body.dark #copyBtn {
+  background-color: #005fa3;
+  color: #fff;
+}
+body.dark-mode #copyBtn:hover,
+body.dark #copyBtn:hover { background-color: #003f73; }
+
+/* Forzar textos clave claros (subtítulos/labels/p/heading dentro del área) */
+body.dark-mode h1, body.dark h1,
+body.dark-mode h2, body.dark h2,
+body.dark-mode h3, body.dark h3,
+body.dark-mode p, body.dark p,
+body.dark-mode label, body.dark label {
+  color: #ffffff !important;
+}
