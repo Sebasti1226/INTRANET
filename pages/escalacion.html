@@ -1,0 +1,49 @@
+<!-- pages/escalacion.html -->
+<section id="escalacion">
+  <div id="escalacion-container" class="archivos-container">
+    <h2>📊 Escalación de Tickets</h2>
+    
+    <div class="input-box">
+      <label>Pega aquí el texto separado por TAB o comas:</label>
+      <textarea id="escalacion-input" rows="3" placeholder="Número de ticket	Fecha de creación	Origen del reporte	ID	Cliente..."></textarea>
+    </div>
+
+    <div id="escalacion-preview" class="preview-horizontal">
+      <div class="preview-celda"><div class="titulo-celda">Número de Ticket</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Fecha de Creación</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Origen del Reporte</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">ID</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Cliente</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Tipo de Servicio</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Problema Reportado</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Tramo 1</div><div class="valor-celda" data-tramo="1"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Tramo 2</div><div class="valor-celda" data-tramo="2"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Detalles</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Ingeniero SD</div><div class="valor-celda"></div></div>
+      <div class="preview-celda"><div class="titulo-celda">Ingeniero TDC</div><div class="valor-celda"></div></div>
+    </div>
+
+    <div class="button-group">
+      <button id="btn-escalacion-load">📝 Llenar Formulario</button>
+      <button id="btn-escalacion-clear">🗑️ Borrar Texto</button>
+      <button id="btn-escalacion-copiar">📋 Copiar Tabla</button>
+    </div>
+
+    <div class="contenido-flex">
+      <table class="tabla-formato" id="escalacion-tabla">
+        <tr><th>Número de Ticket</th><td></td></tr>
+        <tr><th>Fecha de Creación</th><td></td></tr>
+        <tr><th>Origen del Reporte</th><td></td></tr>
+        <tr><th>ID</th><td></td></tr>
+        <tr><th>Cliente</th><td></td></tr>
+        <tr><th>Tipo de Servicio</th><td></td></tr>
+        <tr><th>Problema Reportado</th><td></td></tr>
+        <tr><th>Tramo 1</th><td></td></tr>
+        <tr><th>Tramo 2</th><td></td></tr>
+        <tr><th>Detalles</th><td contenteditable="true" class="editable-cell"></td></tr>
+        <tr><th>Ingeniero SD</th><td></td></tr>
+        <tr><th>Ingeniero TDC</th><td></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
