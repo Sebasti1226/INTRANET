@@ -221,7 +221,12 @@ function initMasivos() {
     const lines = text.trim().split(/\n|\r/).filter(l => l.trim() !== '');
     return lines.map(line => {
       const parts = line.split(/\t|,/).map(p => p.trim());
-      return { tik: parts[0] || '', id: parts[1] || '', fecha: parts[2] || '' };
+      return { 
+        tik: parts[0] || '', 
+        id: parts[1] || '', 
+        fecha: parts[2] || '', 
+        raw: line 
+      };
     });
   }
 
@@ -251,20 +256,50 @@ function initMasivos() {
   function agruparYMarcar(lista) {
     return lista.map((item, idx) => {
       const clase = idx === 0 ? 'tik-item destacado' : 'tik-item';
-      return `<div class="${clase}" data-tik="${item.tik}" data-id="${item.id}" data-fecha="${item.fecha}">${item.tik} | ${item.id} | ${item.fecha}</div>`;
+      return `<div class="${clase}" data-tik="${item.tik}" data-id="${item.id}" data-fecha="${item.fecha}" data-raw="${item.raw}">${item.tik} | ${item.id} | ${item.fecha}</div>`;
     }).join('');
   }
 
   function obtenerIngenieros() {
-    return engineersInput.value.trim().split(/\n/).filter(x => x.trim() !== '');
+    return engineersInput.value
+      .trim()
+      .split(/\n/)
+      .filter(x => x.trim() !== '')
+      .map(line => {
+        const [name, condicion] = line.split('|').map(p => p.trim());
+        const user = name.startsWith('@') ? name : '@' + name;
+        return { nombre: user, etiqueta: condicion || null };
+      });
   }
 
-  function asignarIngeniero() {
+  function extraerEtiquetaTik(texto) {
+    if (/ca[ií]da total/i.test(texto)) return "Caída total";
+    if (/degradaci/i.test(texto)) return "Degradaciones";
+    if (/sin servicio afectado/i.test(texto)) return "Sin servicio afectado";
+    return null;
+  }
+
+  function asignarIngeniero(tikTexto) {
     const engineers = obtenerIngenieros();
     if (engineers.length === 0) return "";
+
+    const etiquetaTik = extraerEtiquetaTik(tikTexto);
+
+    if (etiquetaTik) {
+      const match = engineers.find(e => e.etiqueta && e.etiqueta.toLowerCase() === etiquetaTik.toLowerCase());
+      if (match) return `${match.nombre} (${match.etiqueta})`;
+    }
+
+    const libres = engineers.filter(e => !e.etiqueta);
+    if (libres.length > 0) {
+      const eng = libres[engineerIndex % libres.length];
+      engineerIndex++;
+      return eng.nombre;
+    }
+
     const eng = engineers[engineerIndex % engineers.length];
     engineerIndex++;
-    return eng;
+    return eng.etiqueta ? `${eng.nombre} (${eng.etiqueta})` : eng.nombre;
   }
 
   function activarClickMover() {
@@ -281,7 +316,7 @@ function initMasivos() {
           seleccionados = seleccionados.filter(x => x.base !== comboBase);
           item.classList.remove('seleccionado');
         } else {
-          const eng = asignarIngeniero();
+          const eng = asignarIngeniero(item.dataset.raw);
           seleccionados.push({ 
             base: comboBase, 
             text: eng ? comboBase + " " + eng : comboBase, 
@@ -301,7 +336,7 @@ function initMasivos() {
       const comboBase = `${tik} | ${id}`;
       
       if (!seleccionados.find(x => x.base === comboBase)) {
-        const eng = asignarIngeniero();
+        const eng = asignarIngeniero(item.dataset.raw);
         seleccionados.push({ 
           base: comboBase, 
           text: eng ? comboBase + " " + eng : comboBase, 
@@ -372,8 +407,11 @@ function initMasivos() {
 
   copyBtn.addEventListener('click', () => {
     if (seleccionados.length > 0) {
-      navigator.clipboard.writeText(seleccionados.map(x => x.text).join("\n"))
-        .then(() => alert("Seleccionados copiados al portapapeles ✅"))
+      const texto = seleccionados
+        .map(x => x.text.replace(/\s*\([^)]*\)/g, "")) // quitar etiquetas
+        .join("\n");
+      navigator.clipboard.writeText(texto)
+        .then(() => alert("Seleccionados copiados al portapapeles ✅ (sin etiquetas)"))
         .catch(err => console.error("Error copiando:", err));
     } else {
       alert("No hay TIK seleccionados");
@@ -383,6 +421,7 @@ function initMasivos() {
   actualizarBotonOrden();
   console.log("✅ Módulo Masivos inicializado");
 }
+
 
 // ==================== MÓDULO: TICKET ====================
 const Ticket = {
@@ -482,7 +521,6 @@ function initVips() {
 
   // Copiar como imagen + texto
   btnVipsCopiar.addEventListener("click", async () => {
-    // Validar que html2canvas esté cargado
     if (typeof html2canvas === 'undefined') {
       alert("❌ Error: html2canvas no está disponible");
       return;
@@ -539,7 +577,7 @@ function initVips() {
   console.log("✅ Módulo VIPs inicializado");
 }
 
-// ==================== MÓDULO: ESCALACIÓN ====================
+// ==================== MÓDULO: ESCALACIÓN  ====================
 function initEscalacion() {
   const escalacionInput = document.getElementById("escalacion-input");
   const escalacionPreview = document.getElementById("escalacion-preview");
@@ -577,7 +615,7 @@ function initEscalacion() {
       titulo: "Tabela de Escalação Fibra Escura - Rede Complementar / Torre de Controle",
       seccion1: "DADOS GERAIS DO TICKET",
       seccion2: "DADOS TÉCNICOS",
-      seccion3: "ESCALAÇAO",
+      seccion3: "ESCALAÇÃO",
       numeroTicket: "Número do ticket",
       fechaCreacion: "Data de criação do ticket",
       origenReporte: "Origem do relatório",
@@ -599,59 +637,80 @@ function initEscalacion() {
     celdas.forEach((celda, i) => celda.textContent = valores[i] || "");
   });
 
-  // Llenar tabla (uniendo tramos automáticamente)
+  // Llenar tabla - MEJORADO para mantener formato
   btnEscalacionLoad.addEventListener("click", () => {
     const celdasPreview = escalacionPreview.querySelectorAll(".valor-celda");
     
-    // Extraer valores del preview
     const valores = Array.from(celdasPreview).map(celda => celda.textContent.trim());
     
-    // Obtener tramos
     const tramo1 = celdasPreview[7]?.textContent.trim() || "";
     const tramo2 = celdasPreview[8]?.textContent.trim() || "";
     
-    // Combinar tramos
     let tramosUnidos = "";
     if (tramo1 && tramo2) {
-      tramosUnidos = `${tramo1} - ${tramo2}`;
+      tramosUnidos = `${tramo1} | ${tramo2}`;
     } else if (tramo1) {
       tramosUnidos = tramo1;
     } else if (tramo2) {
       tramosUnidos = tramo2;
     }
     
-    // Mapeo de valores a campos de la tabla (excepto ingenieros que son selects)
     const mapeo = {
-      'ticket': valores[0],      // Número de Ticket
-      'fecha': valores[1],       // Fecha de Creación
-      'origen': valores[2],      // Origen del Reporte
-      'id': valores[3],          // ID
-      'cliente': valores[4],     // Cliente
-      'servicio': valores[5],    // Tipo de Servicio
-      'problema': valores[6],    // Problema Reportado
-      'tramos': tramosUnidos,    // Tramos unidos
-      'detalles': valores[9]     // Detalles
+      'ticket': valores[0],
+      'fecha': valores[1],
+      'origen': valores[2],
+      'id': valores[3],
+      'cliente': valores[4],
+      'servicio': valores[5],
+      'problema': valores[6],
+      'tramos': tramosUnidos,
+      'detalles': valores[9]
     };
     
-    // Llenar campos de texto
+    // Llenar celdas editables manteniendo saltos de línea
     Object.keys(mapeo).forEach(field => {
-      const celda = escalacionTabla.querySelector(`td[data-field="${field}"]`);
+      const celda = escalacionTabla.querySelector(`td.editable-cell[data-field="${field}"]`);
       if (celda) {
-        celda.textContent = mapeo[field];
+        // Usar innerHTML para mantener saltos de línea
+        celda.innerHTML = mapeo[field].replace(/\n/g, '<br>');
+        celda.setAttribute('data-original', mapeo[field]);
       }
     });
 
-    // Llenar selects de ingenieros
+    // Llenar selects
+    const selectOrigen = document.getElementById('origenReporte');
+    if (selectOrigen && valores[2]) {
+      const option = Array.from(selectOrigen.options).find(opt => 
+        opt.value.toLowerCase() === valores[2].toLowerCase()
+      );
+      if (option) {
+        selectOrigen.value = option.value;
+      } else {
+        selectOrigen.value = "";
+      }
+    }
+
+    const selectServicio = document.getElementById('tipoServicio');
+    if (selectServicio && valores[5]) {
+      const option = Array.from(selectServicio.options).find(opt => 
+        opt.value.toLowerCase() === valores[5].toLowerCase()
+      );
+      if (option) {
+        selectServicio.value = option.value;
+      } else {
+        selectServicio.value = "";
+      }
+    }
+
     const selectIngSD = document.getElementById('select-ing-sd');
     const selectIngTDC = document.getElementById('select-ing-tdc');
     
     if (selectIngSD && valores[10]) {
-      // Buscar si existe en las opciones
       const option = Array.from(selectIngSD.options).find(opt => opt.value === valores[10]);
       if (option) {
         selectIngSD.value = valores[10];
       } else {
-        selectIngSD.value = ""; // Si no existe, dejar en "Seleccione una opción"
+        selectIngSD.value = "";
       }
     }
     
@@ -669,41 +728,51 @@ function initEscalacion() {
   btnEscalacionClear.addEventListener("click", () => {
     escalacionInput.value = "";
     escalacionPreview.querySelectorAll(".valor-celda").forEach(c => c.textContent = "");
-    escalacionTabla.querySelectorAll("td").forEach(td => td.textContent = "");
+    escalacionTabla.querySelectorAll("td.editable-cell").forEach(td => {
+      td.textContent = "";
+      td.innerHTML = "";
+    });
+    
+    // Limpiar selects
+    document.getElementById('origenReporte').value = "";
+    document.getElementById('tipoServicio').value = "";
+    document.getElementById('select-ing-sd').value = "";
+    document.getElementById('select-ing-tdc').value = "";
   });
 
-  // Copiar como texto formateado simple con idioma seleccionado
+  // Copiar como texto formateado - MEJORADO
   btnEscalacionCopiar.addEventListener("click", () => {
     const tabla = escalacionTabla;
     const datos = {};
     
-    // Extraer datos de campos de texto
-    tabla.querySelectorAll('td[data-field]').forEach(td => {
+    // Extraer datos de celdas editables
+    tabla.querySelectorAll('td.editable-cell[data-field]').forEach(td => {
       const field = td.getAttribute('data-field');
-      
-      // Si es un campo con select, obtener el valor del select
-      if (field === 'ing-sd') {
-        const select = document.getElementById('select-ing-sd');
-        datos[field] = select ? select.value : '';
-      } else if (field === 'ing-tdc') {
-        const select = document.getElementById('select-ing-tdc');
-        datos[field] = select ? select.value : '';
-      } else {
-        datos[field] = td.textContent.trim();
-      }
+      // Convertir <br> a saltos de línea reales
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = td.innerHTML;
+      datos[field] = tempDiv.textContent || tempDiv.innerText || "";
     });
 
-    // Validar que haya datos
+    // Extraer datos de selects
+    const selectOrigen = document.getElementById('origenReporte');
+    const selectServicio = document.getElementById('tipoServicio');
+    const selectIngSD = document.getElementById('select-ing-sd');
+    const selectIngTDC = document.getElementById('select-ing-tdc');
+
+    datos['origen'] = selectOrigen ? selectOrigen.value : '';
+    datos['servicio'] = selectServicio ? selectServicio.value : '';
+    datos['ing-sd'] = selectIngSD ? selectIngSD.value : '';
+    datos['ing-tdc'] = selectIngTDC ? selectIngTDC.value : '';
+
     if (!datos.ticket) {
       alert("⚠️ Primero llena la tabla con datos");
       return;
     }
 
-    // Obtener idioma seleccionado
     const idioma = escalacionIdioma.value;
     const t = traducciones[idioma];
 
-    // Construir el texto formateado simple
     const textoFormateado = `${t.titulo}
 =============================================
 ${t.seccion1}
@@ -728,13 +797,24 @@ ${t.seccion3}
 ${t.ingenieroSD}: ${datos["ing-sd"] || ""}
 ${t.ingenieroTDC}: ${datos["ing-tdc"] || ""}`;
 
-    // Copiar al portapapeles
     navigator.clipboard.writeText(textoFormateado)
       .then(() => alert(`✅ Tabla de escalamiento copiada al portapapeles (${idioma === 'es' ? 'Español' : 'Português'})`))
       .catch(err => {
         console.error("Error copiando:", err);
         alert("❌ No se pudo copiar el texto");
       });
+  });
+
+  // Manejar pegado en celdas editables para mantener formato
+  const celdasEditables = escalacionTabla.querySelectorAll('td.editable-cell');
+  celdasEditables.forEach(celda => {
+    celda.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const texto = e.clipboardData.getData('text/plain');
+      // Insertar texto manteniendo saltos de línea
+      const textoHTML = texto.replace(/\n/g, '<br>');
+      document.execCommand('insertHTML', false, textoHTML);
+    });
   });
 
   console.log("✅ Módulo Escalación inicializado");
@@ -745,17 +825,24 @@ function initManuales() {
   const lista = document.getElementById("lista-manuales");
   const buscador = document.getElementById("buscador-manuales");
   const visorContainer = document.getElementById("visor-container");
-  const visorPdf = document.getElementById("visor-pdf");
+  const btnCerrarVisor = document.getElementById("btn-cerrar-visor");
+  const visorTitulo = document.getElementById("visor-titulo");
 
   if (!lista) {
     console.warn("⚠️ Elementos del módulo Manuales no encontrados");
     return;
   }
 
+  let todosLosManuales = [];
+
   // Cargar índice de manuales
-  fetch("manuales/manuales.json")
-    .then(res => res.json())
+  fetch("../manuales/manuales.json")
+    .then(res => {
+      if (!res.ok) throw new Error(`Error cargando manuales: ${res.status}`);
+      return res.json();
+    })
     .then(data => {
+      todosLosManuales = data;
       renderLista(data);
 
       // Filtro de búsqueda
@@ -766,25 +853,36 @@ function initManuales() {
       });
     })
     .catch(err => {
-      lista.innerHTML = "<li>⚠️ Error cargando manuales</li>";
+      lista.innerHTML = "<li class='error'>⚠️ Error cargando manuales</li>";
       console.error("Error cargando manuales:", err);
     });
+
+  // Cerrar visor
+  btnCerrarVisor.addEventListener("click", () => {
+    visorContainer.style.display = "none";
+    limpiarVisores();
+  });
 
   function renderLista(items) {
     lista.innerHTML = "";
     
     if (items.length === 0) {
-      lista.innerHTML = "<li>❌ No se encontraron manuales</li>";
+      lista.innerHTML = "<li class='empty'>❌ No se encontraron manuales</li>";
       return;
     }
 
     items.forEach(m => {
       const li = document.createElement("li");
+      const iconoTipo = getIconoTipo(m.tipo);
       li.innerHTML = `
-        <span>${m.nombre}</span>
+        <div class="manual-info">
+          <span class="tipo-icono">${iconoTipo}</span>
+          <span class="manual-nombre">${m.nombre}</span>
+          <span class="manual-tipo">${m.tipo.toUpperCase()}</span>
+        </div>
         <div class="acciones">
-          <a href="manuales/${m.archivo}" download>⬇️ Descargar</a>
-          <button class="btn-ver" data-archivo="${m.archivo}">👁️ Ver</button>
+          <a href="manuales/${m.archivo}" download class="btn-descargar">⬇️ Descargar</a>
+          <button class="btn-ver" data-archivo="${m.archivo}" data-nombre="${m.nombre}" data-tipo="${m.tipo}">👁️ Ver</button>
         </div>
       `;
       lista.appendChild(li);
@@ -794,19 +892,197 @@ function initManuales() {
     document.querySelectorAll(".btn-ver").forEach(btn => {
       btn.addEventListener("click", () => {
         const archivo = btn.dataset.archivo;
-        
-        if (archivo.toLowerCase().endsWith(".pdf")) {
-          visorContainer.style.display = "block";
-          visorPdf.src = `manuales/${archivo}`;
-          visorPdf.focus();
-        } else {
-          window.open(`manuales/${archivo}`, "_blank");
-        }
+        const nombre = btn.dataset.nombre;
+        const tipo = btn.dataset.tipo;
+        visorTitulo.textContent = `📖 ${nombre}`;
+        abrirVisor(archivo, tipo);
       });
     });
   }
 
-  console.log("✅ Módulo Manuales inicializado");
+  function getIconoTipo(tipo) {
+    const iconos = {
+      pdf: "📄",
+      xlsx: "📊",
+      xls: "📊",
+      docx: "📝",
+      doc: "📝"
+    };
+    return iconos[tipo] || "📎";
+  }
+
+  function abrirVisor(archivo, tipo) {
+    limpiarVisores();
+    visorContainer.style.display = "block";
+
+    // Convertir a minúsculas para comparar
+    const tipoNormalizado = tipo.toLowerCase();
+
+    switch(tipoNormalizado) {
+      case "pdf":
+        abrirPDF(archivo);
+        break;
+      case "xlsx":
+      case "xls":
+        abrirExcel(archivo);
+        break;
+      case "docx":
+      case "doc":
+        abrirWord(archivo);
+        break;
+      default:
+        console.warn(`Tipo de archivo no soportado: ${tipo}`);
+    }
+  }
+
+  function abrirPDF(archivo) {
+    const visorPdf = document.getElementById("visor-pdf-wrapper");
+    const iframe = document.getElementById("visor-pdf");
+    visorPdf.style.display = "block";
+    
+    // Detectar si es URL externa o ruta relativa
+    let url = archivo.startsWith('http') ? archivo : `../manuales/${archivo}`;
+    
+    // Si es SharePoint, usar proxy CORS
+    if (url.includes('sharepoint.com')) {
+      url = `https://cors-anywhere.herokuapp.com/${url}`;
+    }
+    
+    iframe.src = url;
+  }
+
+  function abrirExcel(archivo) {
+    if (typeof XLSX === 'undefined') {
+      alert("⚠️ La librería XLSX no está disponible. Descargando...");
+      window.location.reload();
+      return;
+    }
+
+    const visorExcel = document.getElementById("visor-excel-wrapper");
+    visorExcel.style.display = "block";
+
+    // Detectar si es URL externa o ruta relativa
+    let url = archivo.startsWith('http') ? archivo : `../manuales/${archivo}`;
+    
+    // Si es SharePoint, usar proxy CORS
+    if (url.includes('sharepoint.com')) {
+      url = `https://cors-anywhere.herokuapp.com/${url}`;
+    }
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.arrayBuffer();
+      })
+      .then(data => {
+        try {
+          const workbook = XLSX.read(data, { type: 'array' });
+          const tabs = document.getElementById("visor-excel-tabs");
+          const contenido = document.getElementById("visor-excel-contenido");
+          
+          tabs.innerHTML = "";
+          contenido.innerHTML = "";
+
+          if (workbook.SheetNames.length === 0) {
+            contenido.innerHTML = "<p style='color:orange;'>El archivo Excel está vacío</p>";
+            return;
+          }
+
+          workbook.SheetNames.forEach((sheetName, index) => {
+            const tab = document.createElement("button");
+            tab.className = index === 0 ? "excel-tab active" : "excel-tab";
+            tab.textContent = sheetName;
+            tab.addEventListener("click", () => {
+              document.querySelectorAll(".excel-tab").forEach(t => t.classList.remove("active"));
+              tab.classList.add("active");
+              renderSheet(workbook, sheetName, contenido);
+            });
+            tabs.appendChild(tab);
+          });
+
+          // Renderizar primera hoja
+          renderSheet(workbook, workbook.SheetNames[0], contenido);
+        } catch (parseErr) {
+          console.error("Error parseando Excel:", parseErr);
+          document.getElementById("visor-excel-contenido").innerHTML = "<p style='color:red;'>Error analizando el archivo Excel</p>";
+        }
+      })
+      .catch(err => {
+        console.error("Error cargando Excel:", err);
+        document.getElementById("visor-excel-contenido").innerHTML = "<p style='color:red;'>Error cargando archivo Excel: " + err.message + "</p>";
+      });
+  }
+
+  function renderSheet(workbook, sheetName, contenido) {
+    const worksheet = workbook.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+    
+    let html = "<table class='tabla-excel'><tbody>";
+    data.forEach((row, i) => {
+      html += "<tr>";
+      row.forEach((cell, j) => {
+        const tag = i === 0 ? "th" : "td";
+        html += `<${tag}>${cell || ""}</${tag}>`;
+      });
+      html += "</tr>";
+    });
+    html += "</tbody></table>";
+    
+    contenido.innerHTML = html;
+  }
+
+  function abrirWord(archivo) {
+    if (typeof mammoth === 'undefined') {
+      alert("⚠️ La librería Mammoth no está disponible. Descargando...");
+      window.location.reload();
+      return;
+    }
+
+    const visorWord = document.getElementById("visor-word-wrapper");
+    visorWord.style.display = "block";
+
+    // Detectar si es URL externa o ruta relativa
+    let url = archivo.startsWith('http') ? archivo : `../manuales/${archivo}`;
+    
+    // Si es SharePoint, usar proxy CORS
+    if (url.includes('sharepoint.com')) {
+      url = `https://cors-anywhere.herokuapp.com/${url}`;
+    }
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.arrayBuffer();
+      })
+      .then(data => {
+        try {
+          return mammoth.convertToHtml({ arrayBuffer: data });
+        } catch (err) {
+          throw new Error("Error al procesar el archivo Word: " + err.message);
+        }
+      })
+      .then(result => {
+        const contenido = document.getElementById("visor-word-contenido");
+        if (result.value) {
+          contenido.innerHTML = result.value;
+        } else {
+          contenido.innerHTML = "<p style='color:orange;'>El documento Word está vacío o no se pudo procesar</p>";
+        }
+      })
+      .catch(err => {
+        console.error("Error cargando Word:", err);
+        document.getElementById("visor-word-contenido").innerHTML = "<p style='color:red;'>Error cargando archivo Word: " + err.message + "</p>";
+      });
+  }
+
+  function limpiarVisores() {
+    document.getElementById("visor-pdf-wrapper").style.display = "none";
+    document.getElementById("visor-excel-wrapper").style.display = "none";
+    document.getElementById("visor-word-wrapper").style.display = "none";
+    document.getElementById("visor-pdf").src = "";
+  }
+
+  console.log("✅ Módulo Manuales (mejorado) inicializado");
 }
 
 // ==================== MÓDULO: SCRIPTS ====================
@@ -814,34 +1090,147 @@ function setupScriptsJS() {
   const optionCards = document.querySelectorAll(".option-card");
   const output = document.getElementById("scriptOutput");
   const copyBtn = document.getElementById("copyBtn");
+  const idiomaSelect = document.getElementById("scripts-idioma");
 
   if (!output || !copyBtn || optionCards.length === 0) {
     console.warn("⚠️ Elementos del módulo Scripts no encontrados");
     return;
   }
 
+  // Traducciones en 3 idiomas
   const textos = {
-    torre: `<p>Estimado cliente, buen día.</p><p>Le informamos que su solicitud ha sido escalada al personal de mantenimiento...</p>`,
-    redComp: `<p>Estimado cliente, buen día.</p><p>Nos permitimos informar que según nuestra base de datos el servicio corresponde a RED COMPLEMENTARIA...</p>`,
-    solicitarId: `<p>Estimado cliente,</p><p>Solicitamos su amable apoyo nos pueda brindar mayor información...</p>`,
-    validarId: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Le informamos que, al validar en nuestro sistema, hemos encontrado que el ID IDIDIDID no se registra en nuestro sistema. Por favor, solicitamos que verifiquen que el ID del servicio sea el correcto o un ticket antiguo, para así proceder con la apertura de ticket y resolución del mismo. Si no conoce el Id, favor avocarse con el área comercial encargados de brindar dicha información.</p>`,
-    rfo: `<p>Estimado cliente,</p><p>En seguimiento del caso, le informamos que se está solicitando el RFO al área encargada para poder compartírselos, tenga en cuenta que se tiene de 48 a 72 horas hábiles para hacer entrega del mismo.</p><p>Quedamos pendientes a sus comentarios,</p>`,
-    baja: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Le informamos que, al validar en nuestro sistema, hemos encontrado que el ID IDIDIDID está en estado Cancelado. Por favor, solicitamos que verifiquen que el ID sea el correcto o que se pongan en contacto con el área comercial.</p>`,
-    construccion: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Al validar en nuestro sistema, hemos detectado que el ID IDIDIDIDID actualmente se encuentra en estado de construcción. Favor ponerse en contacto con el Project Manager para obtener más información sobre el enlace y validar el estado del servicio. Puede comunicarse directamente a través del correo CCCCCCCCCC.</p>`,
-    adm: `<p>Estimado cliente,</p><p>Le deseamos un excelente día,</p><p>Solicitamos por favor dirigirse directamente al área Comercial o a su Project Manager designado. Ellos son los responsables de este tipo de solicitudes y podrán brindarle la asistencia adecuada y la información necesaria.</p><p>Procederemos con el cierre del ticket.</p><p>Quedamos a su disposición para cualquier otra solicitud o consulta adicional.</p>`,
-    graficas: `<p>Estimado cliente, agradecemos su comunicación.</p><p>En seguimiento a su petición, le informamos que hemos creado las gráficas de consumo correspondientes a . Adjunto encontrará el archivo solicitado.</p><p>Quedamos atentos a sus comentarios.</p>`,
-    operatividad: `<p>Estimado cliente, buen día.</p><p>Solicitamos su apoyo validando el estado actual del servicio reportado y, en caso de que se encuentre operativo, por favor indicarnos si podemos proceder con el cierre de ticket.</p><p>Quedamos atentos.</p>`,
-    descarte: `<p>Estimado IFX, buen día.</p><p>En seguimiento a su solicitud, le informamos que, al validar la información suministrada, no encontramos descarte fotográfico del equipo. Requerimos de su colaboración para enviarnos el descarte fotográfico para poder escalar con el área correspondiente.</p>`,
-    duplicado: `<p>Estimado cliente. Buen día,</p><p>Se está llevando a cabo la revisión del enlace reportado con el siguiente ticket xxxx, le estaremos brindando los avances a la brevedad posible.</p><p>Procederemos a cerrar el ticket correspondiente. Sin embargo, quedamos a su disposición para cualquier otra solicitud o consulta adicional.</p>`,
-    accesos: `<p>Estimado cliente, buen día.</p><p>En seguimiento a su petición, le informamos que los accesos han sido autorizados. A continuación, encontrará la información correspondiente:</p>`,
-    credenciales: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Hemos validado en nuestro sistema y su empresa ya cuenta con credenciales para generar el reporte de su incidencia a través del portal web. Para acceder a nuestro portal, por favor, visite el enlace:</p><p>👉 <a href="https://gestionticketing.ufinet.com/auth" target="_blank">Acceda aquí al portal</a></p><p>Las credenciales asignadas son multiusuario:<br>Correo electrónico:<br>Contraseña:</p><p>Para facilitar su uso, puede consultar nuestros videos tutoriales aquí:<br>🎥 <a href="https://www.youtube.com/playlist?list=PLxXmjSUZ9n3ZG4hyG-0ZVVqXF_ngyvn2f" target="_blank">Ver tutoriales en YouTube</a></p><p>Queremos asegurarnos de que su experiencia con nosotros sea lo más satisfactoria posible.</p>`,
-    crearCredenciales: `<p>Estimado cliente, cordial saludo.</p><p>Agradecemos su comunicación y queremos informarle que hemos recibido su solicitud. Para llevar a cabo las configuraciones necesarias, requeriremos un plazo de 72 horas, durante el cual realizaremos todo el proceso de gestión de acceso al portal web.</p><p>Cualquier inquietud, puede responder a través de este correo y/o comunicarse a nuestras líneas de atención y con gusto lo atenderemos.</p>`,
-    solicitaCredenciales: `<p>Buena tarde estimados,</p><p>Agradecemos su comunicación y queremos informarle que hemos recibido su solicitud. Para llevar a cabo las configuraciones necesarias, requeriremos un plazo de 72 horas, durante el cual realizaremos todo el proceso de gestión de acceso al portal web, pero antes se requiere la siguiente información para seguir con el proceso:</p><p>ID de servicio: (Puede ser cualquiera)<br>Nombre de la empresa:<br>Razón Social:<br>Correo electrónico:<br>Teléfono:<br>Nombre del solicitante:</p><p>Cualquier inquietud, puede respondernos a través de este correo y/o comunicarse a nuestras líneas de atención y con gusto lo atenderemos.</p>`,
-    cerrado: `<p>Estimado cliente,</p><p>Cordial saludo,</p><p>Actualmente el ticket TTTTTT se encuentra cerrado de nuestra parte.</p><p>Si presenta algún tipo de afectación o novedad en el servicio, por favor indicarnos el tipo de falla y los debidos descartes para proceder con la creación de un nuevo caso.</p><p>Quedamos atentos a los comentarios.</p>`,
-    info: `<p>Estimado cliente,</p><p>Cordial saludo,</p><p>Para proceder con la creación del caso y garantizar una gestión adecuada, agradecemos nos indique el motivo específico por el cual se requiere abrir esta solicitud.</p><p>Quedamos atentos a su amable confirmación para continuar con el debido proceso.</p>`,
-    panama: `<p>Buenos días/tardes/noches a todos,</p><p>Estimado cliente, gracias por su comunicación, procederemos a gestionar su solicitud y en breve estaremos informándole el resultado de la misma.</p><p>Seguimos en comunicación.</p>`,
-    reporte: `<p>Estimados, buena tarde,</p><p>Notificamos que para la siguiente solicitud, requerimos de los siguientes datos para proceder con la revisión de lo reportado:</p><p>Descripción de la solicitud:<br>Fecha:<br>Nombre:<br>Dirección:<br>Contacto:<br>País:<br>Ciudad:</p><p>Y confirmarnos si realiza la solicitud como cliente o no cliente, quedamos atentos a la respuesta para proceder con lo solicitado.</p>`,
-    suspendido: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Al validar en nuestro sistema, hemos detectado que el ID IDIDIDIDID actualmente se encuentra en estado Suspendido. Favor ponerse en contacto con el área de Cartera para obtener más información sobre el enlace y validar el estado del servicio. Puede comunicarse directamente por medio de las líneas telefónicas o por vía correo electrónico, que se encuentra en el archivo adjunto.</p>`
+    es: {
+      torre: `<p>Estimado cliente, buen día.</p><p>Le informamos que su solicitud ha sido escalada al personal de mantenimiento...</p>`,
+      redComp: `<p>Estimado cliente, buen día.</p><p>Nos permitimos informar que según nuestra base de datos el servicio corresponde a RED COMPLEMENTARIA...</p>`,
+      solicitarId: `<p>Estimado cliente,</p><p>Solicitamos su amable apoyo nos pueda brindar mayor información...</p>`,
+      validarId: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Le informamos que, al validar en nuestro sistema, hemos encontrado que el ID IDIDIDID no se registra en nuestro sistema. Por favor, solicitamos que verifiquen que el ID del servicio sea el correcto o un ticket antiguo, para así proceder con la apertura de ticket y resolución del mismo. Si no conoce el Id, favor avocarse con el área comercial encargados de brindar dicha información.</p>`,
+      rfo: `<p>Estimado cliente,</p><p>En seguimiento del caso, le informamos que se está solicitando el RFO al área encargada para poder compartírselos, tenga en cuenta que se tiene de 48 a 72 horas hábiles para hacer entrega del mismo.</p><p>Quedamos pendientes a sus comentarios,</p>`,
+      baja: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Le informamos que, al validar en nuestro sistema, hemos encontrado que el ID IDIDIDID está en estado Cancelado. Por favor, solicitamos que verifiquen que el ID sea el correcto o que se pongan en contacto con el área comercial.</p>`,
+      construccion: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Al validar en nuestro sistema, hemos detectado que el ID IDIDIDIDID actualmente se encuentra en estado de construcción. Favor ponerse en contacto con el Project Manager para obtener más información sobre el enlace y validar el estado del servicio. Puede comunicarse directamente a través del correo CCCCCCCCCC.</p>`,
+      adm: `<p>Estimado cliente,</p><p>Le deseamos un excelente día,</p><p>Solicitamos por favor dirigirse directamente al área Comercial o a su Project Manager designado. Ellos son los responsables de este tipo de solicitudes y podrán brindarle la asistencia adecuada y la información necesaria.</p><p>Procederemos con el cierre del ticket.</p><p>Quedamos a su disposición para cualquier otra solicitud o consulta adicional.</p>`,
+      graficas: `<p>Estimado cliente, agradecemos su comunicación.</p><p>En seguimiento a su petición, le informamos que hemos creado las gráficas de consumo correspondientes a . Adjunto encontrará el archivo solicitado.</p><p>Quedamos atentos a sus comentarios.</p>`,
+      operatividad: `<p>Estimado cliente, buen día.</p><p>Solicitamos su apoyo validando el estado actual del servicio reportado y, en caso de que se encuentre operativo, por favor indicarnos si podemos proceder con el cierre de ticket.</p><p>Quedamos atentos.</p>`,
+      descarte: `<p>Estimado IFX, buen día.</p><p>En seguimiento a su solicitud, le informamos que, al validar la información suministrada, no encontramos descarte fotográfico del equipo. Requerimos de su colaboración para enviarnos el descarte fotográfico para poder escalar con el área correspondiente.</p>`,
+      duplicado: `<p>Estimado cliente. Buen día,</p><p>Se está llevando a cabo la revisión del enlace reportado con el siguiente ticket xxxx, le estaremos brindando los avances a la brevedad posible.</p><p>Procederemos a cerrar el ticket correspondiente. Sin embargo, quedamos a su disposición para cualquier otra solicitud o consulta adicional.</p>`,
+      accesos: `<p>Estimado cliente, buen día.</p><p>En seguimiento a su petición, le informamos que los accesos han sido autorizados. A continuación, encontrará la información correspondiente:</p>`,
+      credenciales: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Hemos validado en nuestro sistema y su empresa ya cuenta con credenciales para generar el reporte de su incidencia a través del portal web. Para acceder a nuestro portal, por favor, visite el enlace:</p><p>👉 <a href="https://gestionticketing.ufinet.com/auth" target="_blank">Acceda aquí al portal</a></p><p>Las credenciales asignadas son multiusuario:<br>Correo electrónico:<br>Contraseña:</p><p>Para facilitar su uso, puede consultar nuestros videos tutoriales aquí:<br>🎥 <a href="https://www.youtube.com/playlist?list=PLxXmjSUZ9n3ZG4hyG-0ZVVqXF_ngyvn2f" target="_blank">Ver tutoriales en YouTube</a></p><p>Queremos asegurarnos de que su experiencia con nosotros sea lo más satisfactoria posible.</p>`,
+      crearCredenciales: `<p>Estimado cliente, cordial saludo.</p><p>Agradecemos su comunicación y queremos informarle que hemos recibido su solicitud. Para llevar a cabo las configuraciones necesarias, requeriremos un plazo de 72 horas, durante el cual realizaremos todo el proceso de gestión de acceso al portal web.</p><p>Cualquier inquietud, puede responder a través de este correo y/o comunicarse a nuestras líneas de atención y con gusto lo atenderemos.</p>`,
+      solicitaCredenciales: `<p>Buena tarde estimados,</p><p>Agradecemos su comunicación y queremos informarle que hemos recibido su solicitud. Para llevar a cabo las configuraciones necesarias, requeriremos un plazo de 72 horas, durante el cual realizaremos todo el proceso de gestión de acceso al portal web, pero antes se requiere la siguiente información para seguir con el proceso:</p><p>ID de servicio: (Puede ser cualquiera)<br>Nombre de la empresa:<br>Razón Social:<br>Correo electrónico:<br>Teléfono:<br>Nombre del solicitante:</p><p>Cualquier inquietud, puede respondernos a través de este correo y/o comunicarse a nuestras líneas de atención y con gusto lo atenderemos.</p>`,
+      cerrado: `<p>Estimado cliente,</p><p>Cordial saludo,</p><p>Actualmente el ticket TTTTTT se encuentra cerrado de nuestra parte.</p><p>Si presenta algún tipo de afectación o novedad en el servicio, por favor indicarnos el tipo de falla y los debidos descartes para proceder con la creación de un nuevo caso.</p><p>Quedamos atentos a los comentarios.</p>`,
+      info: `<p>Estimado cliente,</p><p>Cordial saludo,</p><p>Para proceder con la creación del caso y garantizar una gestión adecuada, agradecemos nos indique el motivo específico por el cual se requiere abrir esta solicitud.</p><p>Quedamos atentos a su amable confirmación para continuar con el debido proceso.</p>`,
+      panama: `<p>Buenos días/tardes/noches a todos,</p><p>Estimado cliente, gracias por su comunicación, procederemos a gestionar su solicitud y en breve estaremos informándole el resultado de la misma.</p><p>Seguimos en comunicación.</p>`,
+      reporte: `<p>Estimados, buena tarde,</p><p>Notificamos que para la siguiente solicitud, requerimos de los siguientes datos para proceder con la revisión de lo reportado:</p><p>Descripción de la solicitud:<br>Fecha:<br>Nombre:<br>Dirección:<br>Contacto:<br>País:<br>Ciudad:</p><p>Y confirmarnos si realiza la solicitud como cliente o no cliente, quedamos atentos a la respuesta para proceder con lo solicitado.</p>`,
+      suspendido: `<p>Estimado cliente, agradecemos su comunicación.</p><p>Al validar en nuestro sistema, hemos detectado que el ID IDIDIDIDID actualmente se encuentra en estado Suspendido. Favor ponerse en contacto con el área de Cartera para obtener más información sobre el enlace y validar el estado del servicio. Puede comunicarse directamente por medio de las líneas telefónicas o por vía correo electrónico, que se encuentra en el archivo adjunto.</p>`
+    },
+    en: {
+      torre: `<p>Dear customer, good day.</p><p>We inform you that your request has been escalated to our maintenance team...</p>`,
+      redComp: `<p>Dear customer, good day.</p><p>We inform you that according to our database, your service corresponds to COMPLEMENTARY NETWORK...</p>`,
+      solicitarId: `<p>Dear customer,</p><p>We kindly request your support in providing us with additional information...</p>`,
+      validarId: `<p>Dear customer, we appreciate your communication.</p><p>We inform you that, after validating in our system, we found that ID IDIDIDID is not registered in our system. Please verify that the service ID is correct or check if it is an old ticket to proceed with opening a new ticket and resolution. If you do not know the ID, please contact the commercial area responsible for providing this information.</p>`,
+      rfo: `<p>Dear customer,</p><p>Following up on your case, we inform you that we are requesting the RFO from the responsible area to share it with you. Please note that we have 48 to 72 business hours to deliver it.</p><p>We remain attentive to your comments.</p>`,
+      baja: `<p>Dear customer, we appreciate your communication.</p><p>We inform you that, after validating in our system, we found that ID IDIDIDID is in Cancelled status. Please verify that the ID is correct or contact the commercial area.</p>`,
+      construccion: `<p>Dear customer, we appreciate your communication.</p><p>After validating in our system, we detected that ID IDIDIDIDID is currently in construction status. Please contact the Project Manager for more information about the link and to validate the service status. You can communicate directly via email CCCCCCCCCC.</p>`,
+      adm: `<p>Dear customer,</p><p>We wish you an excellent day.</p><p>We kindly request you to contact the Commercial area or your designated Project Manager. They are responsible for this type of request and will be able to provide you with the appropriate assistance and information.</p><p>We will proceed with ticket closure.</p><p>We remain available for any other request or additional inquiry.</p>`,
+      graficas: `<p>Dear customer, we appreciate your communication.</p><p>Following up on your request, we inform you that we have created the consumption graphs corresponding to . You will find the requested file attached.</p><p>We remain attentive to your comments.</p>`,
+      operatividad: `<p>Dear customer, good day.</p><p>We request your support in validating the current status of the reported service and, if it is operating, please let us know if we can proceed with ticket closure.</p><p>We remain attentive.</p>`,
+      descarte: `<p>Dear IFX, good day.</p><p>Following up on your request, we inform you that, after validating the information provided, we did not find photographic evidence of the equipment. We require your collaboration to send us the photographic evidence so we can escalate to the corresponding area.</p>`,
+      duplicado: `<p>Dear customer, good day.</p><p>We are reviewing the reported link with the following ticket xxxx. We will provide updates as soon as possible.</p><p>We will proceed to close the corresponding ticket. However, we remain available for any other request or additional inquiry.</p>`,
+      accesos: `<p>Dear customer, good day.</p><p>Following up on your request, we inform you that access has been authorized. Below you will find the corresponding information:</p>`,
+      credenciales: `<p>Dear customer, we appreciate your communication.</p><p>We have validated in our system and your company already has credentials to generate your incident report through our web portal. To access our portal, please visit the link:</p><p>👉 <a href="https://gestionticketing.ufinet.com/auth" target="_blank">Access the portal here</a></p><p>The assigned credentials are multi-user:<br>Email:<br>Password:</p><p>To facilitate your use, you can view our tutorial videos here:<br>🎥 <a href="https://www.youtube.com/playlist?list=PLxXmjSUZ9n3ZG4hyG-0ZVVqXF_ngyvn2f" target="_blank">View tutorials on YouTube</a></p><p>We want to ensure that your experience with us is as satisfactory as possible.</p>`,
+      crearCredenciales: `<p>Dear customer, greetings.</p><p>We appreciate your communication and want to inform you that we have received your request. To carry out the necessary configurations, we will require 72 hours, during which we will complete the entire access management process for the web portal.</p><p>For any questions, you can reply through this email and/or contact our support lines and we will be happy to assist you.</p>`,
+      solicitaCredenciales: `<p>Good afternoon everyone,</p><p>We appreciate your communication and want to inform you that we have received your request. To carry out the necessary configurations, we will require 72 hours, during which we will complete the entire access management process for the web portal. However, we need the following information to proceed:</p><p>Service ID: (Can be any)<br>Company Name:<br>Legal Name:<br>Email:<br>Phone:<br>Requestor Name:</p><p>For any questions, you can reply through this email and/or contact our support lines and we will be happy to assist you.</p>`,
+      cerrado: `<p>Dear customer,</p><p>Greetings,</p><p>Currently, ticket TTTTTT is closed on our end.</p><p>If you experience any issues or notice any changes in your service, please let us know the type of failure and the relevant evidence so we can proceed with creating a new case.</p><p>We remain attentive to your comments.</p>`,
+      info: `<p>Dear customer,</p><p>Greetings,</p><p>To proceed with case creation and ensure proper management, we kindly request that you specify the reason for which you need to open this request.</p><p>We remain attentive to your kind confirmation to proceed with the due process.</p>`,
+      panama: `<p>Good morning/afternoon/evening everyone,</p><p>Dear customer, thank you for your communication. We will proceed to manage your request and will shortly inform you of the results.</p><p>We remain in contact.</p>`,
+      reporte: `<p>Dear colleagues, good afternoon,</p><p>We notify you that for the following request, we need the following information to proceed with the review of what was reported:</p><p>Request Description:<br>Date:<br>Name:<br>Address:<br>Contact:<br>Country:<br>City:</p><p>And please confirm whether you are making this request as a client or non-client. We remain attentive to your response to proceed accordingly.</p>`,
+      suspendido: `<p>Dear customer, we appreciate your communication.</p><p>After validating in our system, we detected that ID IDIDIDIDID is currently in Suspended status. Please contact the Collections area for more information about the link and to validate the service status. You can communicate directly through our telephone lines or via email, which you will find in the attached file.</p>`
+    },
+    pt: {
+      torre: `<p>Prezado cliente, bom dia.</p><p>Informamos que sua solicitação foi escalada para nossa equipe de manutenção...</p>`,
+      redComp: `<p>Prezado cliente, bom dia.</p><p>Informamos que, conforme nosso banco de dados, seu serviço corresponde à REDE COMPLEMENTAR...</p>`,
+      solicitarId: `<p>Prezado cliente,</p><p>Solicitamos gentilmente seu apoio fornecendo-nos mais informações...</p>`,
+      validarId: `<p>Prezado cliente, agradecemos sua comunicação.</p><p>Informamos que, ao validar em nosso sistema, descobrimos que o ID IDIDIDID não está registrado em nosso sistema. Favor verificar se o ID do serviço está correto ou se é um ticket antigo para proceder com a abertura de um novo ticket e sua resolução. Se você não conhecer o ID, favor entrar em contato com a área comercial responsável por fornecer essas informações.</p>`,
+      rfo: `<p>Prezado cliente,</p><p>Acompanhando seu caso, informamos que estamos solicitando o RFO à área responsável para compartilhá-lo com você. Observe que temos 48 a 72 horas úteis para entregá-lo.</p><p>Permanecemos atentos aos seus comentários.</p>`,
+      baja: `<p>Prezado cliente, agradecemos sua comunicação.</p><p>Informamos que, ao validar em nosso sistema, descobrimos que o ID IDIDIDID está no status Cancelado. Favor verificar se o ID está correto ou entrar em contato com a área comercial.</p>`,
+      construccion: `<p>Prezado cliente, agradecemos sua comunicação.</p><p>Após validar em nosso sistema, detectamos que o ID IDIDIDIDID está atualmente em status de construção. Favor entrar em contato com o Gerente de Projeto para obter mais informações sobre o link e validar o status do serviço. Você pode se comunicar diretamente via email CCCCCCCCCC.</p>`,
+      adm: `<p>Prezado cliente,</p><p>Desejamos um excelente dia.</p><p>Solicitamos que você entre em contato diretamente com a área Comercial ou com seu Gerente de Projeto designado. Eles são responsáveis por este tipo de solicitação e poderão fornecer-lhe a assistência apropriada e as informações necessárias.</p><p>Procederemos com o fechamento do ticket.</p><p>Permanecemos disponíveis para qualquer outra solicitação ou consulta adicional.</p>`,
+      graficas: `<p>Prezado cliente, agradecemos sua comunicação.</p><p>Acompanhando sua solicitação, informamos que criamos os gráficos de consumo correspondentes a . Você encontrará o arquivo solicitado em anexo.</p><p>Permanecemos atentos aos seus comentários.</p>`,
+      operatividad: `<p>Prezado cliente, bom dia.</p><p>Solicitamos seu apoio validando o status atual do serviço reportado e, caso esteja operacional, favor nos informar se podemos proceder com o fechamento do ticket.</p><p>Permanecemos atentos.</p>`,
+      descarte: `<p>Prezado IFX, bom dia.</p><p>Acompanhando sua solicitação, informamos que, ao validar as informações fornecidas, não encontramos descarte fotográfico do equipamento. Requeremos sua colaboração para nos enviar a descarte fotográfico para que possamos escalar para a área correspondente.</p>`,
+      duplicado: `<p>Prezado cliente, bom dia.</p><p>Estamos realizando a revisão do link reportado com o seguinte ticket xxxx. Forneceremos atualizações o mais breve possível.</p><p>Procederemos para fechar o ticket correspondente. No entanto, permanecemos disponíveis para qualquer outra solicitação ou consulta adicional.</p>`,
+      accesos: `<p>Prezado cliente, bom dia.</p><p>Acompanhando sua solicitação, informamos que os acessos foram autorizados. Abaixo você encontrará as informações correspondentes:</p>`,
+      credenciales: `<p>Prezado cliente, agradecemos sua comunicação.</p><p>Validamos em nosso sistema e sua empresa já possui credenciais para gerar relatórios de seus incidentes através do portal web. Para acessar nosso portal, favor visitar o link:</p><p>👉 <a href="https://gestionticketing.ufinet.com/auth" target="_blank">Acesse o portal aqui</a></p><p>As credenciais atribuídas são multi-usuário:<br>Email:<br>Senha:</p><p>Para facilitar seu uso, você pode consultar nossos vídeos tutoriais aqui:<br>🎥 <a href="https://www.youtube.com/playlist?list=PLxXmjSUZ9n3ZG4hyG-0ZVVqXF_ngyvn2f" target="_blank">Ver tutoriais no YouTube</a></p><p>Queremos garantir que sua experiência conosco seja a mais satisfatória possível.</p>`,
+      crearCredenciales: `<p>Prezado cliente, cordiais cumprimentos.</p><p>Agradecemos sua comunicação e queremos informar que recebemos sua solicitação. Para realizar as configurações necessárias, exigiremos um prazo de 72 horas, durante o qual completaremos todo o processo de gerenciamento de acesso ao portal web.</p><p>Para qualquer dúvida, você pode responder através deste email e/ou contactar nossas linhas de atendimento e teremos prazer em ajudá-lo.</p>`,
+      solicitaCredenciales: `<p>Boa tarde a todos,</p><p>Agradecemos sua comunicação e queremos informar que recebemos sua solicitação. Para realizar as configurações necessárias, exigiremos um prazo de 72 horas, durante o qual completaremos todo o processo de gerenciamento de acesso ao portal web. No entanto, precisamos das seguintes informações para proceder:</p><p>ID do serviço: (Pode ser qualquer um)<br>Nome da Empresa:<br>Razão Social:<br>Email:<br>Telefone:<br>Nome do Solicitante:</p><p>Para qualquer dúvida, você pode responder através deste email e/ou contactar nossas linhas de atendimento e teremos prazer em ajudá-lo.</p>`,
+      cerrado: `<p>Prezado cliente,</p><p>Cordiais cumprimentos,</p><p>Atualmente o ticket TTTTTT está fechado por nossa parte.</p><p>Se você enfrentar algum tipo de afetação ou novidade no serviço, favor informar-nos o tipo de falha e os respectivos descartes para que possamos proceder com a criação de um novo caso.</p><p>Permanecemos atentos aos seus comentários.</p>`,
+      info: `<p>Prezado cliente,</p><p>Cordiais cumprimentos,</p><p>Para proceder com a criação do caso e garantir uma gestão adequada, solicitamos que você nos indique o motivo específico para o qual precisa abrir esta solicitação.</p><p>Permanecemos atentos à sua gentil confirmação para prosseguir com o devido processo.</p>`,
+      panama: `<p>Bom dia/tarde/noite a todos,</p><p>Prezado cliente, obrigado pela sua comunicação. Procederemos a gerenciar sua solicitação e em breve estaremos informando-lhe o resultado.</p><p>Permanecemos em contato.</p>`,
+      reporte: `<p>Prezados colegas, boa tarde,</p><p>Notificamos que para a seguinte solicitação, precisamos das seguintes informações para proceder com a revisão do reportado:</p><p>Descrição da Solicitação:<br>Data:<br>Nome:<br>Endereço:<br>Contato:<br>País:<br>Cidade:</p><p>E favor confirmar se você está fazendo a solicitação como cliente ou não cliente. Permanecemos atentos à sua resposta para proceder conforme o devido.</p>`,
+      suspendido: `<p>Prezado cliente, agradecemos sua comunicação.</p><p>Após validar em nosso sistema, detectamos que o ID IDIDIDIDID está atualmente em status Suspenso. Favor entrar em contato com a área de Cobrança para obter mais informações sobre o link e validar o status do serviço. Você pode se comunicar diretamente através de nossas linhas telefônicas ou via email, que você encontrará no arquivo anexado.</p>`
+    }
+  };
+
+  // Manejo de clic en las tarjetas
+  optionCards.forEach(card => {
+    card.addEventListener("click", () => {
+      optionCards.forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+      const valor = card.getAttribute("data-value");
+      const idioma = idiomaSelect.value || 'es';
+      output.innerHTML = textos[idioma][valor] || "<p>Texto no definido.</p>";
+    });
+  });
+
+  // Cambiar idioma
+  idiomaSelect.addEventListener("change", () => {
+    const cardActivo = document.querySelector(".option-card.active");
+    if (cardActivo) {
+      const valor = cardActivo.getAttribute("data-value");
+      const idioma = idiomaSelect.value;
+      output.innerHTML = textos[idioma][valor] || "<p>Texto no definido.</p>";
+    }
+  });
+
+  // Copiar al portapapeles
+  copyBtn.addEventListener("click", () => {
+    const textoFormateado = convertirHTMLaTexto(output.innerHTML);
+    
+    navigator.clipboard.writeText(textoFormateado)
+      .then(() => alert("Texto copiado al portapapeles ✅"))
+      .catch(() => {
+        const tempText = document.createElement("textarea");
+        tempText.value = textoFormateado;
+        document.body.appendChild(tempText);
+        tempText.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempText);
+        alert("Texto copiado al portapapeles ✅");
+      });
+  });
+
+  console.log("✅ Módulo Scripts inicializado");
+}{
+      torre; "Estimado cliente, le informamos que su solicitud ha sido escalada al personal de mantenimiento.",
+      redComp; "Estimado cliente, según nuestra base de datos el servicio corresponde a RED COMPLEMENTARIA.",
+      solicitarId; "Estimado cliente, solicitamos su apoyo para brindar mayor información.",
+      validarId; "Estimado cliente, el ID IDIDIDID no se registra en nuestro sistema.",
+      rfo; "Estimado cliente, se está solicitando el RFO. Se tienen 48 a 72 horas hábiles para entrega.",
+      baja; "Estimado cliente, el ID IDIDIDID está en estado Cancelado.",
+      construccion; "Estimado cliente, el ID está en estado de construcción.",
+      adm; "Estimado cliente, solicitamos contacte al área Comercial o su Project Manager.",
+      graficas; "Estimado cliente, hemos creado las gráficas de consumo solicitadas.",
+      operatividad; "Estimado cliente, solicitamos validar el estado actual del servicio.",
+      descarte; "Estimado IFX, no encontramos descarte fotográfico del equipo.",
+      duplicado; "Estimado cliente, se está revisando el enlace reportado con ticket xxxx.",
+      accesos; "Estimado cliente, los accesos han sido autorizados.",
+      credenciales; "Estimado cliente, su empresa cuenta con credenciales para el portal.",
+      crearCredenciales; "Estimado cliente, requeriremos 72 horas para completar el proceso.",
+      solicitaCredenciales; "Estimado cliente, necesitamos los siguientes datos para proceder.",
+      cerrado; "Estimado cliente, el ticket se encuentra cerrado de nuestra parte.",
+      info; "Estimado cliente, necesitamos más información sobre su solicitud.",
+      panama; "Estimado cliente, procederemos a gestionar su solicitud.",
+      reporte; "Estimados, necesitamos los siguientes datos para proceder.",
+      suspendido; "Estimado cliente, el ID se encuentra en estado Suspendido."
   };
 
   // Manejo de clic en las tarjetas
@@ -854,14 +1243,13 @@ function setupScriptsJS() {
     });
   });
 
-  // Copiar al portapapeles (convierte HTML a texto plano con formato)
+  // Copiar al portapapeles
   copyBtn.addEventListener("click", () => {
     const textoFormateado = convertirHTMLaTexto(output.innerHTML);
     
     navigator.clipboard.writeText(textoFormateado)
       .then(() => alert("Texto copiado al portapapeles ✅"))
       .catch(() => {
-        // Fallback para navegadores antiguos
         const tempText = document.createElement("textarea");
         tempText.value = textoFormateado;
         document.body.appendChild(tempText);
@@ -873,31 +1261,26 @@ function setupScriptsJS() {
   });
 
   console.log("✅ Módulo Scripts inicializado");
-}
+
 
 // ==================== UTILIDAD: Convertir HTML a texto plano ====================
 function convertirHTMLaTexto(html) {
-  // Crear un elemento temporal para parsear el HTML
   const temp = document.createElement('div');
   temp.innerHTML = html;
   
-  // Reemplazar <p> por saltos de línea
   temp.querySelectorAll('p').forEach(p => {
     p.insertAdjacentText('afterend', '\n\n');
   });
   
-  // Reemplazar <br> por saltos de línea
   temp.querySelectorAll('br').forEach(br => {
     br.replaceWith('\n');
   });
   
-  // Obtener texto plano
   let texto = temp.textContent || temp.innerText;
   
-  // Limpiar múltiples espacios en blanco pero mantener saltos de línea
-  texto = texto.replace(/[ \t]+/g, ' '); // Múltiples espacios → un espacio
-  texto = texto.replace(/\n\s+\n/g, '\n\n'); // Limpiar líneas vacías con espacios
-  texto = texto.trim(); // Eliminar espacios al inicio/final
+  texto = texto.replace(/[ \t]+/g, ' ');
+  texto = texto.replace(/\n\s+\n/g, '\n\n');
+  texto = texto.trim();
   
   return texto;
 }

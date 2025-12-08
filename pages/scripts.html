@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Scripts</title>
-  <link rel="stylesheet" href="../assets/styles.css"> <!-- si tienes estilos -->
-</head>
-<body>
-  <section id="scripts">
-    <div class="scripts-container">
-      <!-- Opciones -->
-      <div class="dropdown-container">
-      <h3>Validación</h3>
+<section id="scripts">
+  <div class="scripts-container">
+    <!-- Opciones -->
+    <div class="dropdown-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0;">Validación</h3>
+        <select id="scripts-idioma" class="idioma-selector" style="min-width: 150px;">
+          <option value="es">🇪🇸 Español</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="pt">🇧🇷 Português (Brasil)</option>
+        </select>
+      </div>
       <div class="option-card" data-value="cerrado">TK CERRADO Y SE PREGUNTA SI HAY AFECTACIÓN AÚN</div>
       <div class="option-card" data-value="info">SOLICITUD DE INFORMACIÓN PARA LA CREACIÓN DEL TK</div>
       <div class="option-card" data-value="panama">PANAMÁ NO ID</div>
@@ -38,17 +37,12 @@
       <div class="option-card" data-value="solicitarId">SOLICITAR ID PARA CREACIÓN DEL TK POR CORREO</div>
     </div>
 
-      <!-- Output -->
-      <div class="output-container">
-        <div id="scriptOutput" class="script-output">
-          <p>Selecciona una opción del menú para mostrar el texto aquí.</p>
-        </div>
-        <button id="copyBtn">📋 Copiar</button>
+    <!-- Output -->
+    <div class="output-container">
+      <div id="scriptOutput" class="script-output">
+        <p>Selecciona una opción del menú para mostrar el texto aquí.</p>
       </div>
+      <button id="copyBtn">📋 Copiar</button>
     </div>
-  </section>
-
-  <!-- Script conectado -->
-  <script src="../assets/script.js"></script>
-</body>
-</html>
+  </div>
+</section>

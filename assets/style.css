@@ -1,5 +1,5 @@
 /* =====================================================
-   INTRANET CORPORATIVA - ESTILOS OPTIMIZADOS
+   INTRANET CORPORATIVA - ESTILOS OPTIMIZADOS FINALES
    ===================================================== */
 
 /* ==================== VARIABLES CSS ==================== */
@@ -541,7 +541,7 @@ button:disabled {
   margin-top: 15px;
 }
 
-/* ==================== MÓDULO: VIPS ==================== */
+/* ==================== MÓDULO: VIPS Y ARCHIVOS ==================== */
 .archivos-container {
   display: flex;
   flex-direction: column;
@@ -621,6 +621,33 @@ button:disabled {
 }
 
 #btn-vips-copiar:hover {
+  background: var(--success-hover);
+}
+
+#btn-escalacion-load {
+  background: var(--primary);
+  color: white;
+}
+
+#btn-escalacion-load:hover {
+  background: var(--primary-hover);
+}
+
+#btn-escalacion-clear {
+  background: var(--danger);
+  color: white;
+}
+
+#btn-escalacion-clear:hover {
+  background: var(--danger-hover);
+}
+
+#btn-escalacion-copiar {
+  background: var(--success);
+  color: white;
+}
+
+#btn-escalacion-copiar:hover {
   background: var(--success-hover);
 }
 
@@ -717,7 +744,6 @@ button:disabled {
   font-style: italic;
 }
 
-/* Estilos para selects de ingenieros */
 .tabla-formato .ingeniero-select {
   width: 100%;
   padding: 8px 12px;
@@ -772,6 +798,14 @@ button:disabled {
   font-size: 14px;
 }
 
+#lista-manuales-wrapper {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  background: var(--bg-input);
+}
+
 #lista-manuales {
   list-style: none;
   padding: 0;
@@ -784,11 +818,49 @@ button:disabled {
   align-items: center;
   padding: 12px 15px;
   border-bottom: 1px solid var(--border);
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 #lista-manuales li:hover {
   background: var(--bg-card-secondary);
+  transform: translateX(3px);
+}
+
+#lista-manuales li.loading,
+#lista-manuales li.empty,
+#lista-manuales li.error {
+  justify-content: center;
+  padding: 20px;
+  color: var(--text-muted);
+}
+
+.manual-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.tipo-icono {
+  font-size: 20px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.manual-nombre {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.manual-tipo {
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  background: var(--primary);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
 }
 
 #lista-manuales .acciones {
@@ -803,14 +875,17 @@ button:disabled {
   font-weight: 600;
   font-size: 13px;
   background: transparent;
-  border: none;
+  border: 1px solid var(--primary);
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
 #lista-manuales .acciones a:hover,
 #lista-manuales .acciones button:hover {
-  text-decoration: underline;
+  background: var(--primary);
+  color: white;
 }
 
 #visor-container {
@@ -821,11 +896,155 @@ button:disabled {
   border: 1px solid var(--border);
 }
 
-#visor-pdf {
-  width: 100%;
-  height: 500px;
+.visor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--border);
+}
+
+.visor-header h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.btn-cerrar {
+  background: var(--danger);
+  color: white;
   border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-cerrar:hover {
+  background: var(--danger-hover);
+  transform: scale(1.05);
+}
+
+#visor-pdf-wrapper {
+  background: white;
+  padding: 15px;
   border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+body.dark #visor-pdf-wrapper {
+  background: #0f172a;
+}
+
+/* Estilos Excel */
+.excel-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.excel-tab {
+  padding: 8px 14px;
+  border: 2px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.excel-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.excel-tab.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.excel-contenido {
+  max-height: 600px;
+  overflow-y: auto;
+  background: var(--bg-input);
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+}
+
+.tabla-excel {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabla-excel th {
+  background: #1e3a8a;
+  color: white;
+  padding: 10px;
+  font-weight: 700;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+.tabla-excel td {
+  padding: 10px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--bg-input);
+}
+
+.tabla-excel tr:nth-child(even) td {
+  background: var(--bg-card-secondary);
+}
+
+.tabla-excel tr:hover td {
+  background: rgba(0, 119, 204, 0.1);
+}
+
+/* Estilos Word */
+.word-contenido {
+  max-height: 600px;
+  overflow-y: auto;
+  background: var(--bg-input);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  line-height: 1.6;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.word-contenido h1,
+.word-contenido h2,
+.word-contenido h3,
+.word-contenido h4,
+.word-contenido h5,
+.word-contenido h6 {
+  margin: 15px 0 10px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.word-contenido p {
+  margin: 10px 0;
+}
+
+.word-contenido ul,
+.word-contenido ol {
+  margin: 10px 0 10px 20px;
+}
+
+.word-contenido li {
+  margin: 5px 0;
 }
 
 /* ==================== MÓDULO: SCRIPTS ==================== */
@@ -840,11 +1059,13 @@ button:disabled {
   margin: 20px auto;
   color: var(--text);
   border: 1px solid var(--border);
+  height: 700px;
+  overflow: hidden;
 }
 
 .dropdown-container {
-  flex: 1;
-  max-height: 600px;
+  flex: 0 0 350px;
+  max-height: 100%;
   overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -875,6 +1096,9 @@ button:disabled {
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .option-card:hover {
@@ -891,14 +1115,17 @@ button:disabled {
 }
 
 .output-container {
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
 #scriptOutput {
   width: 100%;
-  min-height: 500px;
+  flex: 1;
   padding: 20px;
   border: 2px solid var(--border);
   border-radius: 10px;
@@ -908,8 +1135,15 @@ button:disabled {
   background-color: var(--bg-input);
   color: var(--text);
   overflow-y: auto;
-  margin-bottom: 15px;
+  overflow-x: hidden;
   white-space: pre-wrap;
+  word-wrap: break-word;
+  user-select: text;
+  -webkit-user-select: text;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 15px;
 }
 
 #scriptOutput p {
@@ -927,7 +1161,6 @@ button:disabled {
 }
 
 #copyBtn {
-  align-self: flex-end;
   padding: 12px 24px;
   background-color: var(--primary);
   color: white;
@@ -935,48 +1168,33 @@ button:disabled {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  flex-shrink: 0;
+  width: auto;
+  align-self: flex-end;
 }
 
 #copyBtn:hover {
   background-color: var(--primary-hover);
 }
 
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 768px) {
-  .navbar ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .accesos-container,
-  .scripts-container {
-    flex-direction: column;
-  }
-
-  .masivos-container {
-    grid-template-columns: 1fr;
-  }
-
-  main {
-    margin: 10px;
-    padding: 15px;
-  }
-}
-
-/* ==================== TOOLTIP ==================== */
-.tooltip {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+#scripts-idioma {
   padding: 8px 12px;
+  border: 2px solid var(--primary);
   border-radius: 6px;
+  background: var(--bg-input);
+  color: var(--text);
   font-size: 13px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: 9999;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.tooltip.show {
-  opacity: 1;
+#scripts-idioma:hover {
+  background: var(--primary);
+  color: white;
+}
+
+#scripts-idioma:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
