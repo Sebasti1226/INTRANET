@@ -1,0 +1,34 @@
+<div class="masivos-container">
+  <h1>Ordenar TIK por ID + Asignar Ingenieros</h1>
+  <p class="lead">Pega tu lista de TIK e IDs, y también un listado de ingenieros. Los TIK seleccionados se asignarán automáticamente a ingenieros de la lista en orden cíclico.</p>
+
+  <div class="card">
+    <label><strong>Pega aquí los datos:</strong></label>
+    <textarea id="dataInput" placeholder="Ejemplo desde Excel:
+TIK001	PA	2025-01-01
+TIK002	CR	2025-01-02"></textarea>
+
+    <div class="controls">
+      <button id="processBtn">Procesar 🔄</button>
+      <button id="clearBtn" class="secondary">Limpiar 🆑</button>
+      <button id="toggleOrdenBtn" class="secondary">Orden: Descendente ⬇↕</button>
+    </div>
+    <p class="muted">La preferencia de orden se guardará automáticamente.</p>
+
+    <div id="output" class="output"></div>
+  </div>
+
+  <div id="selectedZone" class="card">
+    <h2>📦 Seleccionados <span id="count">0</span></h2>
+    <pre id="selectedList"></pre>
+    <button id="copyBtn">Copiar al portapapeles</button>
+  </div>
+
+  <div id="engineersZone" class="card">
+    <h2>👷 Ingenieros</h2>
+    <textarea id="engineersInput" placeholder="@manuel
+@sofia
+@juan"></textarea>
+    <p class="muted">Los ingenieros se asignarán en orden cíclico a cada TIK seleccionado.</p>
+  </div>
+</div>
