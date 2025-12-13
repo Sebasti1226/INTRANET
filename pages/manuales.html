@@ -1,0 +1,39 @@
+<section id="manuales">
+  <div class="manuales-container">
+    <h2>📘 Librería de Manuales</h2>
+
+    <!-- Buscador -->
+    <input type="text" id="buscador-manuales" placeholder="🔍 Buscar manual...">
+
+    <!-- Lista de manuales -->
+    <div id="lista-manuales-wrapper">
+      <ul id="lista-manuales">
+        <li class="loading">⏳ Cargando manuales...</li>
+      </ul>
+    </div>
+
+    <!-- Visor de contenido -->
+    <div id="visor-container" style="display:none; margin-top:25px;">
+      <div class="visor-header">
+        <h3 id="visor-titulo">📖 Vista previa</h3>
+        <button id="btn-cerrar-visor" class="btn-cerrar">✕ Cerrar</button>
+      </div>
+      
+      <!-- Visor PDF -->
+      <div id="visor-pdf-wrapper" style="display:none;">
+        <iframe id="visor-pdf" width="100%" height="600px" style="border:none; border-radius:8px;"></iframe>
+      </div>
+
+      <!-- Visor Excel -->
+      <div id="visor-excel-wrapper" style="display:none;">
+        <div id="visor-excel-tabs" class="excel-tabs"></div>
+        <div id="visor-excel-contenido" class="excel-contenido"></div>
+      </div>
+
+      <!-- Visor Word -->
+      <div id="visor-word-wrapper" style="display:none;">
+        <div id="visor-word-contenido" class="word-contenido"></div>
+      </div>
+    </div>
+  </div>
+</section>

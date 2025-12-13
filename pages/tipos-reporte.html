@@ -1,0 +1,450 @@
+<!-- pages/tipos-reporte.html -->
+<section id="tipos-reporte">
+  <div class="tipos-reporte-container">
+    <h2>📋 Tipos de Reporte - Guía de Clasificación</h2>
+    <p class="descripcion">Usa esta guía para identificar rápidamente el tipo de caso y saber a qué equipo escalarlo.</p>
+
+
+  
+ 
+    <!-- Buscador  -->
+    <div class="search-box">
+      <input type="text" id="buscar-tipo" placeholder="🔍 Buscar por tipo de reporte, equipo o palabra clave...">
+    </div> 
+
+    <!-- Categorías de Reportes -->
+    <div class="categorias-grid">
+      
+      <!-- FIBRA OSCURA -->
+      <div class="categoria-card" data-categoria="fibra oscura corte degradacion enlace caido">
+        <div class="card-header fibra-oscura">
+          <span class="icono">🔴</span>
+          <h3>Fibra Oscura</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>🚨 Corte de Fibra</strong>
+            <p><strong>Descripción:</strong> Enlace caído, sin luz, pérdida total de servicio</p>
+            <p><strong>Equipo:</strong> Torre de Control</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad alta">ALTA</span></p>
+            <p><strong>Nota:</strong> Solicitar tramos afectados y hora exacta del corte</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>⚠️ Degradación</strong>
+            <p><strong>Descripción:</strong> Servicio intermitente, pérdida de paquetes, latencia alta</p>
+            <p><strong>Equipo:</strong> Torre de Control</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Solicitar gráficas de monitoreo y horario de afectación</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RED COMPLEMENTARIA -->
+      <div class="categoria-card" data-categoria="red complementaria internet ip equipos">
+        <div class="card-header red-complementaria">
+          <span class="icono">🌐</span>
+          <h3>Red Complementaria</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>📡 Conectividad / Internet</strong>
+            <p><strong>Descripción:</strong> Sin acceso a Internet, problema de navegación</p>
+            <p><strong>Equipo:</strong> NOC - Red Complementaria</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad alta">ALTA</span></p>
+            <p><strong>Nota:</strong> Validar IP pública, gateway y DNS</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>🔧 Configuración de Equipos</strong>
+            <p><strong>Descripción:</strong> Cambios en router, firewall, VLANs</p>
+            <p><strong>Equipo:</strong> NOC - Red Complementaria</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Requiere autorización del cliente y configuración previa</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALARMAS IFX -->
+      <div class="categoria-card" data-categoria="alarmas ifx monitoreo nms">
+        <div class="card-header alarmas">
+          <span class="icono">⚡</span>
+          <h3>Alarmas IFX</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>🔔 Alarma Activa</strong>
+            <p><strong>Descripción:</strong> Cliente reporta alarma en NMS/sistema de monitoreo</p>
+            <p><strong>Equipo:</strong> Torre de Control</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad alta">ALTA</span></p>
+            <p><strong>Nota:</strong> Solicitar captura de pantalla de la alarma y código</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>📊 Revisión de Histórico</strong>
+            <p><strong>Descripción:</strong> Consulta sobre alarmas pasadas</p>
+            <p><strong>Equipo:</strong> Torre de Control</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Indicar rango de fechas a revisar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESOS -->
+      <div class="categoria-card" data-categoria="accesos subestacion ingreso personal">
+        <div class="card-header accesos">
+          <span class="icono">🔑</span>
+          <h3>Accesos</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>🚪 Solicitud de Acceso a SSEE</strong>
+            <p><strong>Descripción:</strong> Autorización para ingreso a subestaciones</p>
+            <p><strong>Equipo:</strong> ETCEE (Guatemala)</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Usar módulo de Accesos. Incluir: SSEE, horario y personal</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>🏢 Acceso a Datacenters</strong>
+            <p><strong>Descripción:</strong> Ingreso a DC o facilities del cliente</p>
+            <p><strong>Equipo:</strong> PM/KAM del cliente</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Coordinar con 24-48h de anticipación</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREDENCIALES -->
+      <div class="categoria-card" data-categoria="credenciales portal acceso web usuario">
+        <div class="card-header credenciales">
+          <span class="icono">🔐</span>
+          <h3>Credenciales</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>🆕 Creación de Credenciales</strong>
+            <p><strong>Descripción:</strong> Cliente nuevo solicita acceso al portal</p>
+            <p><strong>Equipo:</strong> Service Desk (Propio)</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Tiempo de gestión: 72 horas. Requiere datos del cliente</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>🔄 Recuperación de Credenciales</strong>
+            <p><strong>Descripción:</strong> Cliente olvidó usuario/contraseña</p>
+            <p><strong>Equipo:</strong> Service Desk (Propio)</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Validar identidad del solicitante</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMINISTRATIVOS -->
+      <div class="categoria-card" data-categoria="administrativo facturacion rfo reporte pm kam">
+        <div class="card-header administrativo">
+          <span class="icono">📄</span>
+          <h3>Casos Administrativos</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>💰 Facturación / Cartera</strong>
+            <p><strong>Descripción:</strong> Consultas sobre pagos, facturas, suspensiones</p>
+            <p><strong>Equipo:</strong> Área de Cartera / Finanzas</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Service Desk NO gestiona. Derivar a área comercial</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>📋 Solicitud de RFO</strong>
+            <p><strong>Descripción:</strong> Cliente solicita reporte formal de falla</p>
+            <p><strong>Equipo:</strong> Área de Calidad</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Tiempo de entrega: 48-72 horas hábiles</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>🤝 Solicitudes PM/KAM</strong>
+            <p><strong>Descripción:</strong> Cambios contractuales, ampliaciones, cancelaciones</p>
+            <p><strong>Equipo:</strong> PM o KAM asignado</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Service Desk NO gestiona. Cerrar ticket y derivar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MANTENIMIENTOS -->
+      <div class="categoria-card" data-categoria="mantenimiento ventana programado preventivo">
+        <div class="card-header mantenimiento">
+          <span class="icono">🔧</span>
+          <h3>Mantenimientos</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>📅 Mantenimiento Programado</strong>
+            <p><strong>Descripción:</strong> Trabajos preventivos con ventana autorizada</p>
+            <p><strong>Equipo:</strong> Torre de Control / O&M</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Notificar al cliente con 48-72h de anticipación</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>⚡ Mantenimiento Emergente</strong>
+            <p><strong>Descripción:</strong> Trabajos urgentes sin ventana programada</p>
+            <p><strong>Equipo:</strong> Torre de Control</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad alta">ALTA</span></p>
+            <p><strong>Nota:</strong> Informar al cliente inmediatamente del impacto</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONSULTAS TÉCNICAS -->
+      <div class="categoria-card" data-categoria="consulta tecnica informacion configuracion">
+        <div class="card-header consulta">
+          <span class="icono">💡</span>
+          <h3>Consultas Técnicas</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>📊 Gráficas de Consumo</strong>
+            <p><strong>Descripción:</strong> Solicitud de estadísticas de tráfico/BW</p>
+            <p><strong>Equipo:</strong> Torre de Control</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Especificar rango de fechas y circuito</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>🗺️ Información de Ruta</strong>
+            <p><strong>Descripción:</strong> Consulta sobre trazado físico del enlace</p>
+            <p><strong>Equipo:</strong> Ingeniería / PM</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Información sensible, validar autorización</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>✅ Validación de Operatividad</strong>
+            <p><strong>Descripción:</strong> Cliente solicita confirmar estado del servicio</p>
+            <p><strong>Equipo:</strong> Torre de Control / NOC</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad baja">BAJA</span></p>
+            <p><strong>Nota:</strong> Revisar monitoreo y confirmar al cliente</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONSTRUCCIÓN -->
+      <div class="categoria-card" data-categoria="construccion proyecto instalacion nuevo">
+        <div class="card-header construccion">
+          <span class="icono">🏗️</span>
+          <h3>Construcción</h3>
+        </div>
+        <div class="card-body">
+          <div class="tipo-item">
+            <strong>🆕 Servicio en Construcción</strong>
+            <p><strong>Descripción:</strong> ID aún no activo, en fase de implementación</p>
+            <p><strong>Equipo:</strong> Project Manager</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Service Desk NO gestiona. Derivar a PM del proyecto</p>
+          </div>
+          
+          <div class="tipo-item">
+            <strong>📡 Instalación de Equipos</strong>
+            <p><strong>Descripción:</strong> Coordinación para instalación CPE</p>
+            <p><strong>Equipo:</strong> Instalaciones / PM</p>
+            <p><strong>Prioridad:</strong> <span class="prioridad media">MEDIA</span></p>
+            <p><strong>Nota:</strong> Coordinar horario con cliente</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Leyenda de Prioridades -->
+    <div class="leyenda-prioridades">
+      <h3>🎯 Leyenda de Prioridades</h3>
+      <div class="leyenda-items">
+        <div class="leyenda-item">
+          <span class="prioridad alta">ALTA</span>
+          <p>Servicio caído o afectación crítica - Respuesta inmediata</p>
+        </div>
+        <div class="leyenda-item">
+          <span class="prioridad media">MEDIA</span>
+          <p>Afectación parcial o coordinación requerida - Respuesta en 2-4h</p>
+        </div>
+        <div class="leyenda-item">
+          <span class="prioridad baja">BAJA</span>
+          <p>Consultas, solicitudes administrativas - Respuesta en 24-48h</p>
+        </div>
+      </div>
+    </div>
+
+</div>
+</div>
+
+<!-- TAB 5: CUADROS DE CIERRE -->
+<div class="tab-content" data-content="cierres">
+  <div class="cierres-container">
+    <div class="alert-box importante">
+      <h3>📊 CUADROS DE CIERRE</h3>
+      <p>Estos son los cuadros estándar para cierre de tickets. Todos son <strong>NO IMPUTABLES</strong></p>
+    </div>
+
+    <div class="cierre-grid">
+      
+      <div class="cierre-card">
+        <div class="cierre-header">🔄 REESTABLECE SIN INTERVENCIÓN</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No determinada / Desconocida - Reestablece sin intervención</p>
+          <p><strong>Solución:</strong> Sin acciones correctivas</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">💤 SIN RESPUESTA</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No Aplica / Sin accesos o respuesta</p>
+          <p><strong>Solución:</strong> Sin acciones correctivas</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">❌ MAL REPORTE</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No Aplica / Mal reporte</p>
+          <p><strong>Solución:</strong> No aplica</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">🔧 VM (VENTANA DE MANTENIMIENTO)</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No Aplica / VM Notificada</p>
+          <p><strong>Solución:</strong> VM Notificada</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">🔁 TICKET DUPLICADO</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No Aplica / Ticket Duplicado</p>
+          <p><strong>Solución:</strong> Se maneja con el TT [número del ticket master]</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">📊 GRÁFICAS DE CONSUMO</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / Solicitudes / Gráficas</p>
+          <p><strong>Solución:</strong> Se procede con el envío de las gráficas</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">🔑 ACCESOS DATACENTER</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / Solicitudes / Otras / Accesos Datacenter</p>
+          <p><strong>Solución:</strong> Accesos autorizados</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">🌐 RED COMPLEMENTARIA</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No aplica / Mal Reporte</p>
+          <p><strong>Solución:</strong> Ninguna por parte de Ufinet - Falta de plantilla complementaria y registro fotográfico</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">🤝 SOLICITUD PM/KAM</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / Solicitudes / Solicitud área comercial/PM</p>
+          <p><strong>Solución:</strong> Se traslada al cliente, al área Comercial/PM</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="cierre-header">⏸️ SERVICIO SUSPENDIDO</div>
+        <div class="cierre-body">
+          <p><strong>Causa:</strong> Cliente / No aplica / Servicio Suspendido</p>
+          <p><strong>Solución:</strong> No aplica - Se redirige al cliente al área de cartera</p>
+          <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: NOTAS IMPORTANTES -->
+<div class="tab-content" data-content="notas">
+  <div class="notas-container">
+    
+    <div class="nota-importante">
+      <h3>⚠️ VALIDACIONES OBLIGATORIAS</h3>
+      <ul>
+        <li>✅ Todos los ID terminados en <strong>E, X</strong> deben ser validados primero por <strong>N1</strong></li>
+        <li>✅ NO escalar directamente a TORRE sin validar con N1 primero</li>
+        <li>✅ Cuando hay casos resueltos por una master, <strong>SI O SI</strong> toca crear nuevo caso imputable a Ufinet</li>
+      </ul>
+    </div>
+
+    <div class="nota-importante">
+      <h3>📞 HORARIOS Y DATOS DE CONTACTO</h3>
+      <ul>
+        <li>🇵🇦 <strong>PANAMÁ:</strong> 08:00 a 18:00 horas (lunes a viernes)</li>
+        <li>📱 <strong>El Salvador:</strong> +503 2273 6750</li>
+      </ul>
+    </div>
+
+    <div class="nota-importante">
+      <h3>🎯 SOLICITUDES ESPECIALES</h3>
+      <ul>
+        <li><strong>Adquirir servicios LATAM:</strong> Pedir datos → Buscar comercial del país → Enviar correo</li>
+        <li><strong>Adquirir servicios REICO:</strong> Pedir datos (contacto, correo, cel, empresa) → Escalar con <strong>Manuel Beteta</strong></li>
+        <li><strong>DEMOS de CEC:</strong> Para pruebas de saturación → Crear caso sin servicio → Cliente valida con comercial si solicita ampliación</li>
+        <li><strong>Cancelación de servicio:</strong> Por correo → Con comercial | Por llamada → Dirigir al comercial</li>
+      </ul>
+    </div>
+
+    <div class="nota-importante">
+      <h3>⏱️ TIEMPOS DE RESPUESTA</h3>
+      <ul>
+        <li>📋 <strong>RFO (Reporte de falla):</strong> 48-72 horas</li>
+        <li>🔐 <strong>Credenciales nuevas:</strong> 72 horas</li>
+        <li>📊 <strong>Respuesta de Calidad:</strong> 48-72 horas</li>
+      </ul>
+    </div>
+
+    <div class="nota-importante">
+      <h3>💰 CARTERA (Pagos y Facturación)</h3>
+      <ul>
+        <li>📧 <strong>Cobros mal generados:</strong> facturacionufinet@ufinet.com</li>
+        <li>💳 <strong>Estados de cuenta:</strong> Área de CARTERA (ver tabla de escalación)</li>
+        <li>⏸️ <strong>Servicios SUSPENDIDOS:</strong> Todo lo relacionado con dinero → CARTERA</li>
+      </ul>
+    </div>
+
+    <div class="nota-importante">
+      <h3>📝 REGLAS IMPORTANTES</h3>
+      <ul>
+        <li>✅ <strong>Service Desk NO gestiona:</strong> Temas comerciales, KAM, PM, facturación</li>
+        <li>✅ Ventanas de mantenimiento solicitadas por clientes → CC: notificacionesclusternorte@ufinet.com, noclatam@ufinet.com, Richat Mesias</li>
+        <li>✅ Casos COLOCATION → TCL (tramos aparecen al lado del recuadro de info)</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+  </div>
+
+</section> 

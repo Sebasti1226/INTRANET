@@ -1,0 +1,61 @@
+<h2>🔑 Accesos a Subestaciones</h2>
+<p>Completa los siguientes campos para generar automáticamente el correo de solicitud de accesos.</p>
+
+<div class="container accesos-container compact">
+  <div class="left-panel">
+    <label>Para:</label>
+    <div class="flex-row">
+      <input type="text" id="para" value="jefeturno@etcee.com.gt">
+      <button class="copy-btn" onclick="Accesos.copiarTexto('para')">Copiar</button>
+    </div>
+
+    <label>CC:</label>
+    <div class="flex-row">
+      <input type="text" id="cc" value="jefeturno@etcee.com.gt; operador1@etcee.com.gt; seguridad@etcee.com.gt; noclatam@ufinet.com; porellana@ufinet.com; jalburez@ufinet.com; ezuncar@ufinet.com; wfernandezq@ufinet.com; lordonezr@ufinet.com; jusanti1636@gmail.com">
+      <button class="copy-btn" onclick="Accesos.copiarTexto('cc')">Copiar</button>
+    </div>
+
+    <label>Asunto:</label>
+    <div class="flex-row">
+      <input type="text" id="asunto" readonly>
+      <button class="copy-btn" onclick="Accesos.copiarTexto('asunto')">Copiar</button>
+    </div>
+
+    <label>SSEE (Subestación):</label>
+    <input type="text" id="ssee">
+
+    <label>Horario:</label>
+    <div class="flex-row">
+      <input type="time" id="horaInicio"> a <input type="time" id="horaFin">
+    </div>
+
+    <label>Listado de personal:</label>
+    <textarea id="personal" rows="3"></textarea>
+
+    <div class="flex-row">
+      <button class="clear-btn" onclick="Accesos.borrarContenido()">Borrar</button>
+      <button class="generate-btn" onclick="Accesos.generarCorreo()">Generar y Copiar</button>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="info-box"><label>Para:</label><span id="paraRight"></span></div>
+    <div class="info-box"><label>CC:</label><span id="ccRight"></span></div>
+    <div class="info-box"><label>Asunto:</label><span id="asuntoRight"></span></div>
+    <div class="info-box"><label>SSEE:</label><span id="sseeRight"></span></div>
+    <div class="info-box"><label>Horario:</label><span id="horarioRight">--:-- a --:--</span></div>
+    <div class="info-box"><label>Listado de personal:</label><span id="personalRight"></span></div>
+    <textarea id="correoGenerado" rows="8" readonly></textarea>
+
+    <!-- 📞 Teléfonos -->
+    <div class="info-box telefonos">
+      <h3>📞 Teléfonos</h3>
+      <ul>
+        <li><strong>+502 6643 4335</strong> – Operadores</li>
+        <li><strong>+502 6627 5581</strong> – Jefe de turno E1 IP</li>
+        <li><strong>+502 6627 5582</strong> – Operador E1</li>
+        <li><strong>+502 2422 2116</strong> – Acceso</li>
+      </ul>
+    </div>
+  </div>
+</div>
