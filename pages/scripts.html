@@ -1,0 +1,48 @@
+<section id="scripts">
+  <div class="scripts-container">
+    <!-- Opciones -->
+    <div class="dropdown-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0;">Validación</h3>
+        <select id="scripts-idioma" class="idioma-selector" style="min-width: 150px;">
+          <option value="es">🇪🇸 Español</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="pt">🇧🇷 Português (Brasil)</option>
+        </select>
+      </div>
+      <div class="option-card" data-value="cerrado">TK CERRADO Y SE PREGUNTA SI HAY AFECTACIÓN AÚN</div>
+      <div class="option-card" data-value="info">SOLICITUD DE INFORMACIÓN PARA LA CREACIÓN DEL TK</div>
+      <div class="option-card" data-value="panama">PANAMÁ NO ID</div>
+      <div class="option-card" data-value="reporte">REPORTE COMUNITARIO</div>
+      <div class="option-card" data-value="suspendido">SERVICIO SUSPENDIDO / CARTERA</div>
+      <div class="option-card" data-value="validarId">VALIDAR ID CLIENTE</div>
+      <div class="option-card" data-value="baja">ID DADO DE BAJA / CANCELADO</div>
+      <div class="option-card" data-value="construccion">VALIDAR ID CLIENTE / ESTADO CONSTRUCCIÓN</div>
+      <div class="option-card" data-value="operatividad">VALIDACIÓN OPERATIVIDAD</div>
+
+      <h3>Escalaciones</h3>
+      <div class="option-card" data-value="torre">ESCALAMIENTO TORRE DE CONTROL FIBRA OSCURA</div>
+      <div class="option-card" data-value="redComp">DATOS DE RED COMPLEMENTARIA</div>
+      <div class="option-card" data-value="rfo">SOLICITUD DE RFO CALIDAD</div>
+      <div class="option-card" data-value="adm">CASO CIERRE CASOS ADMINISTRATIVOS PM/KAM</div>
+      <div class="option-card" data-value="graficas">GRÁFICAS DE CONSUMO</div>
+      <div class="option-card" data-value="descarte">DESCARTE FOTOGRÁFICO IFX</div>
+      <div class="option-card" data-value="duplicado">TICKET DUPLICADO</div>
+
+      <h3>Credenciales / Accesos</h3>
+      <div class="option-card" data-value="accesos">ACCESOS AUTORIZADOS</div>
+      <div class="option-card" data-value="credenciales">CREDENCIALES CLIENTE</div>
+      <div class="option-card" data-value="crearCredenciales">SE LE MANDA A CREAR CREDENCIALES</div>
+      <div class="option-card" data-value="solicitaCredenciales">CLIENTE SOLICITA CREDENCIALES</div>
+      <div class="option-card" data-value="solicitarId">SOLICITAR ID PARA CREACIÓN DEL TK POR CORREO</div>
+    </div>
+
+    <!-- Output -->
+    <div class="output-container">
+      <div id="scriptOutput" class="script-output">
+        <p>Selecciona una opción del menú para mostrar el texto aquí.</p>
+      </div>
+      <button id="copyBtn">📋 Copiar</button>
+    </div>
+  </div>
+</section>

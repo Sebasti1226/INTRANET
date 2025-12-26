@@ -1,0 +1,173 @@
+<!-- pages/escalacion.html -->
+<section id="escalacion">
+  <div class="escalacion-moderna-container">
+    
+    <!-- HEADER -->
+    <div class="escalacion-header">
+      <div class="header-content">
+        <div class="header-icon">🌐</div>
+        <div>
+          <h2>Tabla de Escalación</h2>
+          <p class="header-subtitle">Sistema automatizado para gestión de tickets de Fibra Oscura y Red Complementaria</p>
+        </div>
+      </div>
+      <select id="escalacion-idioma" class="idioma-selector-moderno">
+        <option value="es">🇪🇸 Español</option>
+        <option value="pt">🇧🇷 Português (Brasil)</option>
+      </select>
+    </div>
+
+    <!-- INPUT DE DATOS -->
+    <div class="input-datos-section">
+      <label>📋 Pega aquí los datos para llenar los campos, Si se requiere separar tan solo ingrea el TAB o comas (Si detecta una coma genera un espacio):</label>
+      <textarea id="escalacion-input" rows="3" placeholder="Número de ticket	Fecha de creación	Origen del reporte	ID	Cliente	Tipo de Servicio	Problema Reportado	Tramo 1	Tramo 2	Detalles	Ingeniero SD	Ingeniero TDC"></textarea>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="escalacion-actions">
+      <button id="btn-escalacion-load" class="btn-primary">📝 Llenar Formulario</button>
+      <button id="btn-escalacion-clear" class="btn-secondary">🗑️ Limpiar Celdas</button>
+      <button id="btn-escalacion-copiar" class="btn-success">📋 Copiar Datos</button>
+    </div>
+
+    <!-- FORMULARIO LIMPIO ESTILO IMAGEN 2 -->
+    <div class="formulario-escalacion">
+
+      <div class="escalacion-section-title">
+          DATOS GENERALES
+      </div>
+
+      
+      <!-- Fila 1 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Número de ticket:</label>
+          <input type="text" id="esc-ticket" data-field="ticket" placeholder="TIK-XXXXXX">
+        </div>
+        <div class="form-group">
+          <label>Fecha de creación de ticket:</label>
+          <input type="text" id="esc-fecha" data-field="fecha" placeholder="DD/MM/YYYY">
+        </div>
+        <div class="form-group">
+          <label>Origen del reporte:</label>
+          <select id="esc-origen" data-field="origen">
+            <option value="">Seleccione una opción</option>
+            <option value="Web">Web</option>
+            <option value="Llamada">Llamada</option>
+            <option value="Correo">Correo</option>
+            <option value="API">API</option>
+            <option value="Proactivo">Proactivo</option>
+            <option value="WhatsApp">WhatsApp</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Fila 2 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>ID:</label>
+          <input type="text" id="esc-id" data-field="id" placeholder="ID del servicio">
+        </div>
+        <div class="form-group">
+          <label>Cliente:</label>
+          <input type="text" id="esc-cliente" data-field="cliente" placeholder="Nombre del cliente">
+        </div>
+        <div class="form-group">
+          <label>Tipo de servicio:</label>
+          <select id="esc-servicio" data-field="servicio">
+            <option value="">Seleccione una opción</option>
+            <option value="Fibra Oscura">Fibra Oscura</option>
+            <option value="Red Complementaria">Red Complementaria</option>
+            <option value="Alarma IFX">Alarma IFX</option>
+            <option value="Accesos">Accesos</option>
+            <option value="Towering">Towering</option>
+            <option value="Colocation">Colocation</option>
+            <option value="Manos Remotas">Manos Remotas</option>
+            <option value="Proactivo O&M">Proactivo O&M</option>
+          </select>
+        </div>
+      </div>
+
+    <div class="escalacion-section-title">
+      DATOS TÉCNICOS
+    </div>
+
+
+      <!-- Fila 3 -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label>Problema reportado:</label>
+          <textarea id="esc-problema" data-field="problema" rows="2" placeholder="Descripción del problema"></textarea>
+        </div>
+      </div>
+
+      <!-- Fila 4 -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label>Tramos:</label>
+          <input type="text" id="esc-tramos" data-field="tramos" placeholder="Tramo 1 | Tramo 2">
+        </div>
+      </div>
+
+      <!-- Fila 5 -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label>Detalles:</label>
+          <textarea id="esc-detalles" data-field="detalles" rows="3" placeholder="Detalles adicionales del ticket"></textarea>
+        </div>
+      </div>
+
+
+      <div class="escalacion-section-title">
+          ESCALACIÓN
+      </div>
+
+
+      <!-- Fila 6 -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ingeniero SD:</label>
+          <select id="esc-ing-sd" data-field="ing-sd">
+            <option value="">Seleccione una opción</option>
+            <option value="B. Alejandro Sanchez Campo">B. Alejandro Sanchez Campo</option>
+            <option value="Diego A. Cabrera Muñoz">Diego A. Cabrera Muñoz</option>
+            <option value="Franklin G. Pipicano Correa">Franklin G. Pipicano Correa</option>
+            <option value="Gustavo A. Torres Guevara">Gustavo A. Torres Guevara</option>
+            <option value="Jarby A. Castillo Arango">Jarby A. Castillo Arango</option>
+            <option value="Jesus D. Botero Osorio">Jesus D. Botero Osorio</option>
+            <option value="Jose A. Colorado Gonzalez">Jose A. Colorado Gonzalez</option>
+            <option value="Jose E. Castaño Tapiero">Jose E. Castaño Tapiero</option>
+            <option value="Juan Pablo Correa Botero">Juan Pablo Correa Botero</option>
+            <option value="Julian E. Monpotes Quira">Julian E. Monpotes Quira</option>
+            <option value="M. Daniel Quiñones Tovar">M. Daniel Quiñones Tovar</option>
+            <option value="Marco A. Galindo Galviz">Marco A. Galindo Galviz</option>
+            <option value="Mayra A. Estrada Valencia">Mayra A. Estrada Valencia</option>
+            <option value="Rafael E. Cabrera Penna">Rafael E. Cabrera Penna</option>
+            <option value="Sebastian Palomino Zapata">Sebastian Palomino Zapata</option>
+            <option value="Yeniffer A. Murillo Naspiran">Yeniffer A. Murillo Naspiran</option>
+            <option value="Yulian G. Berrio Noguera">Yulian G. Berrio Noguera</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ingeniero TDC:</label>
+          <select id="esc-ing-tdc" data-field="ing-tdc">
+            <option value="">Seleccione una opción</option>
+            <option value="Bryan A. Ferrer Torres">Bryan A. Ferrer Torres</option>
+            <option value="Diego A. Rodriguez Garcia">Diego A. Rodriguez Garcia</option>
+            <option value="Fabian A. Martínez Arango">Fabian A. Martínez Arango</option>
+            <option value="Hernan D. Peralta Escorcia">Hernan D. Peralta Escorcia</option>
+            <option value="Ivan A. Pinto de la Hoz">Ivan A. Pinto de la Hoz</option>
+            <option value="J. Camilo Gomez Gutierrez">J. Camilo Gomez Gutierrez</option>
+            <option value="Jaider A. Jaramillo Herrera">Jaider A. Jaramillo Herrera</option>
+            <option value="Manuel A. Salgado Rendon">Manuel A. Salgado Rendon</option>
+            <option value="Pedro A. Millan Agudelo">Pedro A. Millan Agudelo</option>
+            <option value="Raul E. Castro Marin">Raul E. Castro Marin</option>
+            <option value="Reynel Jimenez Diaz">Reynel Jimenez Diaz</option>
+            <option value="Yina P. Ortiz Alvarez">Yina P. Ortiz Alvarez</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

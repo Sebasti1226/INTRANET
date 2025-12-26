@@ -1,0 +1,1167 @@
+<!-- pages/tipos-reporte.html -->
+<section id="tipos-reporte">
+  <div class="tipos-reporte-container">
+    <h2>📋 Guía Completa Service Desk - Tipos de Reporte y Procedimientos</h2>
+    <p class="descripcion">Toda la información necesaria para gestionar tickets correctamente</p>
+
+    <!-- Buscador -->
+    <div class="search-box">
+      <input type="text" id="buscar-tipo" placeholder="🔍 Buscar por tipo, equipo, correo, estado, país...">
+    </div>
+
+    <!-- TABS DE NAVEGACIÓN -->
+    <div class="tabs-navigation">
+      <button class="tab-btn active" data-tab="correos">📧 Correos</button>
+      <button class="tab-btn" data-tab="tipos-ticket">📝 Tipos de Ticket</button>
+      <button class="tab-btn" data-tab="estados-id">🔍 Estados ID</button>
+      <button class="tab-btn" data-tab="accesos-dc">🔑 Accesos DC</button>
+      <button class="tab-btn" data-tab="cierres">📊 Cuadros Cierre</button>
+      <button class="tab-btn" data-tab="llamadas">📞 Llamadas Prueba</button>
+      <button class="tab-btn" data-tab="kam-pm">🤝 KAM/PM</button>
+      <!-- <button class="tab-btn" data-tab="notas">⚡ Notas</button>  -->
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAB 1: CORREOS DE ESCALACIÓN -->
+    <!-- ============================================ -->
+    <div class="tab-content active" data-content="correos">
+      <div class="correos-container">
+        
+        <div class="correo-section">
+          <h3>📧 CORREOS PRINCIPALES</h3>
+          <div class="correo-grid">
+            <div class="correo-item">
+              <strong>NOC:</strong>
+              <span class="correo-copiable">noclatam@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="noclatam@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>REICO:</strong>
+              <span class="correo-copiable">soporte@reicocr.com</span>
+              <button class="btn-copy-correo" data-correo="soporte@reicocr.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>Correo Alliance:</strong>
+              <span class="correo-copiable">noc@alliance.com</span>
+              <button class="btn-copy-correo" data-correo="noc@alliance.com">📋</button>
+            </div>
+             <div class="correo-item">
+              <strong>CEC:</strong>
+              <span class="correo-copiable">cnoc@ufinet.com | cec@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="cnoc@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>N1:</strong>
+              <span class="correo-copiable">n1.latam@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="n1.latam@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>N1 WR:</strong>
+              <span class="correo-copiable">WirelessUfinetLatam@ufinetlatam.onmicrosoft.com</span>
+              <button class="btn-copy-correo" data-correo="WirelessUfinetLatam@ufinetlatam.onmicrosoft.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>N2:</strong>
+              <span class="correo-copiable">Gu_NOCLATAM_N2</span>
+              <button class="btn-copy-correo" data-correo="Gu_NOCLATAM_N2">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>N1 BR (Brasil):</strong>
+              <span class="correo-copiable">n1.br@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="n1.br@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>FTTH:</strong>
+              <span class="correo-copiable">soporte.ftth@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="soporte.ftth@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>GRUPO PLATAFORMAS:</strong>
+              <span class="correo-copiable">plataformas.latam@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="plataformas.latam@ufinet.com">📋</button>
+            </div>
+              <div class="correo-item">
+              <strong>SOC:</strong>
+              <span class="correo-copiable">soc.latam@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="soc.latam@ufinet.com">📋</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="correo-section">
+          <h3>🌎 TORRE DE CONTROL</h3>
+          <div class="correo-grid">
+            <div class="correo-item">
+              <strong>TCC (Torre Colombia):</strong>
+              <span class="correo-copiable">NOC_COLOMBIA</span>
+              <button class="btn-copy-correo" data-correo="NOC_COLOMBIA">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>TCL (Torre LATAM):</strong>
+              <span class="correo-copiable">NOCLATAM | torrecontrol.latam@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="torrecontrol.latam@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>TORRE TDC (EC-CL-AR-PY):</strong>
+              <span class="correo-copiable">torredecontrolc@ufinetlatam.onmicrosoft.com</span>
+              <button class="btn-copy-correo" data-correo="torredecontrolc@ufinetlatam.onmicrosoft.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>TORRE BR (Brasil):</strong>
+              <span class="correo-copiable">torrecontrole.br@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="torrecontrole.br@ufinet.com">📋</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="correo-section">
+          <h3>🌍 CORREOS CC POR PAÍSES</h3>
+          <div class="correo-grid">
+            <div class="correo-item">
+              <strong>🇪🇸 ESPAÑA (ID de España):</strong>
+              <span class="correo-copiable">noc@lyntia.com</span>
+              <button class="btn-copy-correo" data-correo="noc@lyntia.com">📋</button>
+              <p class="nota-pequena">ID de España van en copia para el NOC</p>
+            </div>
+            <div class="correo-item">
+              <strong>🇵🇦 PA GOB (Panamá):</strong>
+              <span class="correo-copiable">servicemanager.pa@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="servicemanager.pa@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>🇪🇨 NOC ECUADOR:</strong>
+              <span class="correo-copiable">nocec@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="nocec@ufinet.com">📋</button>
+            </div>
+             <div class="correo-item">
+              <strong>PY (Paraguay):</strong>
+              <span class="correo-copiable">nocpy@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="nocpy@ufinet.com">📋</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="correo-section">
+          <h3>💼 OTROS CORREOS</h3>
+          <div class="correo-grid">
+            <div class="correo-item">
+              <strong>PQR UFINET:</strong>
+              <span class="correo-copiable">contratos@ufinet.com | notificacionesufinetcolombia@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="contratos@ufinet.com">📋</button>
+            </div>
+            <div class="correo-item">
+              <strong>FACTURACIÓN:</strong>
+              <span class="correo-copiable">facturacionufinet@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="facturacionufinet@ufinet.com">📋</button>
+              <p class="nota-pequena">Para cobros mal generados sobre la factura</p>
+            </div>
+            <div class="correo-item importante">
+              <strong>CON CARTERA:</strong>
+              <p class="nota-pequena">Para el estado de cuenta - Ver tabla de escalación</p>
+            </div>
+              <div class="correo-item">
+              <strong>REICO FINANCIERO:</strong>
+              <span class="correo-copiable">financiero@reicocr.com</span>
+              <button class="btn-copy-correo" data-correo="financiero@reicocr.com">📋</button>
+            </div>
+              <div class="correo-item">
+              <strong>REICO COMERCIAL:</strong>
+              <span class="correo-copiable">comercial@reicocr.com</span>
+              <button class="btn-copy-correo" data-correo="comercial@reicocr.com">📋</button>
+            </div>          
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAB 2: TIPOS DE CREACIÓN DE TICKETS -->
+    <!-- ============================================ -->
+    <div class="tab-content" data-content="tipos-ticket">
+      <div class="categorias-grid">
+        
+        <!-- TICKETS DEGRADACIONES -->
+        <div class="categoria-card" data-categoria="degradacion intermitencia latencia paquetes lentitud atenuacion flaps bouncing crc">
+          <div class="card-header degradacion">
+            <span class="icono">⚠️</span>
+            <h3>TICKETS DEGRADACIONES</h3>
+          </div>
+          <div class="card-body">
+            <div class="tipo-item">
+              <strong>🔄 INTERMITENCIA</strong>
+              <p><strong>Cuándo crear:</strong> Cliente indica flaps, pixelaciones, inestabilidades, intermitencia, BOUNCING</p>
+              <p><strong>Tipo de ticket:</strong> Degradación - Intermitencia</p>
+            </div>
+            
+            <div class="tipo-item">
+              <strong>🐌 ALTA LATENCIA</strong>
+              <p><strong>Cuándo crear:</strong> Cliente reporta tiempos altos de respuesta o pings altos</p>
+              <p><strong>Tipo de ticket:</strong> Degradación - Alta Latencia</p>
+            </div>
+
+            <div class="tipo-item">
+              <strong>📉 PÉRDIDA DE PAQUETES</strong>
+              <p><strong>Cuándo crear:</strong>  Cliente indica pérdidas, Errores de CRC, Packet Loss, alto % PLR</p>
+              <p><strong>Tipo de ticket:</strong> Degradación - Pérdida de Paquetes</p>
+            </div>
+
+            <div class="tipo-item">
+              <strong>⏱️ LENTITUD</strong>
+              <p><strong>Cuándo crear:</strong> Servicio lento o no llega al ancho de banda contratado</p>
+              <p><strong>Tipo de ticket:</strong> Degradación - Lentitud</p>
+              <p><strong>Qué solicitar:</strong> Ancho de banda contratado VS lo que está recibiendo</p>
+            </div>
+
+            <div class="tipo-item importante">
+              <strong>📶 ATENUACIÓN</strong>
+              <p><strong>Cuándo crear:</strong> Niveles no están en rango óptimo o indican atenuación</p>
+              <p><strong>Tipo de ticket:</strong> Degradación - Atenuación</p>
+              <p><strong>Qué solicitar:</strong> Niveles actuales Y niveles históricos</p>
+              <p><strong>Importante:</strong> Solicitar horario para validaciones/acciones correctivas (puede causar caída total)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TICKETS SOLICITUDES SSA -->
+        <div class="categoria-card" data-categoria="solicitud ssa motivos caida inestabilidad bloqueo paginas certificacion filtros ptr bgp">
+          <div class="card-header solicitudes">
+            <span class="icono">📝</span>
+            <h3>TICKETS SOLICITUDES SSA</h3>
+          </div>
+          <div class="card-body">
+            <div class="tipo-item">
+              <strong>🔍 MOTIVOS DE CAÍDA</strong>
+              <p><strong>Qué solicitar:</strong> Fecha y Hora exacta de caída + Hora de restablecimiento del enlace</p>
+            </div>
+            
+            <div class="tipo-item">
+              <strong>📊 MOTIVOS DE INESTABILIDAD</strong>
+              <p><strong>Qué solicitar:</strong> Hora que presentó inestabilidad + Hora de restablecimiento</p>
+            </div>
+
+            <div class="tipo-item">
+              <strong>🚫 BLOQUEOS DE PÁGINAS | 🌐 PROBLEMAS CON PÁGINAS</strong>
+              <p><strong>Qué solicitar:</strong> Páginas específicas que presentan inconveniente, URLs de las páginas afectadas y error que presenta al ingresar</p>
+            </div>
+
+
+            <div class="tipo-item">
+              <strong>✅ CERTIFICACIONES</strong>
+              <p><strong>Qué solicitar:</strong></p>
+              <ul>
+                <li>Fecha y hora de la certificación</li>
+                <li>Qué pruebas necesita en la certificación</li>
+                <li>Datos requeridos para gestionar accesos</li>
+                <li><strong>Si es remota:</strong> IP, Máscara, computadora conectada directamente a equipos</li>
+              </ul>
+            </div>
+
+            <div class="tipo-item">
+              <strong>🔓 APERTURA DE FILTROS</strong>
+              <p><strong>Qué solicitar:</strong> IP + Carta LOA</p>
+            </div>
+
+            <div class="tipo-item">
+              <strong>🔗 REGISTRO PTR</strong>
+              <p><strong>Qué solicitar:</strong> IP pública del servidor + Dominio a colocar en registro</p>
+            </div>
+
+            <div class="tipo-item">
+              <strong>🔄 LEVANTAMIENTO DE SESIÓN BGP</strong>
+              <p><strong>Acción:</strong> Asignar levantamiento de sesión BGP</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TICKETS GENÉRICOS -->
+        <div class="categoria-card" data-categoria="generico colombia costa rica reico azteca claro electricaribe liberty tramo">
+          <div class="card-header generico">
+            <span class="icono">🌎</span>
+            <h3>TICKETS GENÉRICOS</h3>
+          </div>
+          <div class="card-body">
+            <div class="tipo-item">
+              <strong>🇨🇴 COLOMBIA - Tickets Genéricos</strong>
+              <p><strong>Empresas:</strong></p>
+              <ul>
+                <li>Azteca</li>
+                <li>Claro</li>
+                <li>Electricaribe</li>
+              </ul>
+              <p><strong>Acción:</strong> Crear ticket genérico</p>
+            </div>
+            
+            <div class="tipo-item">
+              <strong>🇨🇷 COSTA RICA - Tickets Genéricos</strong>
+              <p><strong>Empresas:</strong></p>
+              <ul>
+                <li>Claro CR</li>
+                <li>Liberty</li>
+                <li>Solo clientes REICO</li>
+              </ul>
+              <p><strong>Acción:</strong> Crear ticket genérico</p>
+            </div>
+
+            <div class="tipo-item importante">
+              <strong>⚠️ IMPORTANTE - CLIENTES REICO</strong>
+              <p>Muchos clientes REICO NO cuentan con ID, pero ESO NO significa que no se deba generar ticket</p>
+              <p><strong>REGLA:</strong> TODO CLIENTE REICO QUE NO DÉ ID → SE DEBE CREAR TICKET GENÉRICO</p>
+              <p><strong>NOTA:</strong> SE DEBE COLOCAR EL TRAMO O EL NOMBRE DEL CLIENTE EN EL TÍTULO DEL TICKET</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAB 3: ESTADOS DE LOS ID -->
+    <!-- ============================================ -->
+    <div class="tab-content" data-content="estados-id">
+      <div class="estados-info">
+        <div class="alert-box importante">
+          <h3>⚠️ IMPORTANTE - LEER SIEMPRE</h3>
+          <p><strong>LOS ESTADOS DE TODOS LOS ID DEBEN SER VALIDADOS EN PHOENIX</strong></p>
+          <p>Previa validación de Phoenix: En los Estados De Baja, Suspendido y Cancelado NO se genera ticket (salvo error de Ufinet). Se le notifica al cliente.</p>
+        </div>
+
+        <div class="estados-grid">
+          
+          <div class="estado-card generar">
+            <div class="estado-header">✅ EN SERVICIO</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ✅ SE GENERA TICKET</p>
+              <p>Servicio activo y operativo</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">❌ DE BAJA</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Estado:</strong> Se dio de baja</p>
+              <p><strong>Validar en:</strong> Phoenix</p>
+              <p><strong>Es con:</strong> KAM</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">⏸️ SUSPENDIDO</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Motivo:</strong> Inconveniente Administrativo o falta de Pago</p>
+              <p><strong>Proceso:</strong></p>
+              <ol>
+                <li>Validar primero en Phoenix</li>
+                <li>Confirmar el corte por cartera</li>
+                <li>Abocar ÚNICAMENTE a CARTERA (tabla de escalación en intranet)</li>
+              </ol>
+              <p><strong>❌ NO se debe remitir al comercial</strong></p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">🔄 BAJA LÓGICA</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Motivo:</strong> El sistema detectó que le van a hacer algún cambio al ID</p>
+              <p><strong>Significado:</strong> Están migrando el servicio a un nuevo ID</p>
+              <p><strong>Qué hacer:</strong> Consultar el ID nuevo del servicio</p>
+              <p><strong>Proceso:</strong> Validar Phoenix → Consultar N1, Si no se genera abocar al KAM</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">💤 INACTIVO</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Proceso:</strong> Validar primero en Phoenix</p>
+              <p><strong>Indicar al cliente:</strong> Que validen con comercial para que actualicen el ID</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">📋 PLANIFICACIÓN</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Estado:</strong> Están en desarrollo</p>
+              <p><strong>Proceso:</strong> Validar Phoenix → Consultar N1 → Reportar a P.M.</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">🏗️ CONSTRUCCIÓN</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Estado:</strong> Lo están instalando</p>
+              <p><strong>Proceso:</strong> Validar Phoenix → Consultar N1 → Reportar a P.M.</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">🚫 CANCELADO</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Estado:</strong> Se canceló</p>
+              <p><strong>Validar en:</strong> Phoenix primero</p>
+              <p><strong>Nota:</strong> No se puede generar ticket, no se puede reabrir un ticket en este estado</p>
+              <p><strong>Es con:</strong> KAM</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">⏳ PENDIENTE CLIENTE</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Proceso:</strong> Validar Phoenix → Consultar N1 → Reportar a P.M.</p>
+            </div>
+          </div>
+
+          <div class="estado-card no-generar">
+            <div class="estado-header">❌ ANULADO</div>
+            <div class="estado-body">
+              <p><strong>Acción:</strong> ❌ NO SE GENERA TICKET</p>
+              <p><strong>Motivo:</strong> Le crearon otro ID (cancelación, renovación, etc.)</p>
+              <p><strong>Validar en:</strong> Phoenix</p>
+              <p><strong>Es con:</strong> KAM</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAB 4: ACCESOS A DATACENTERS -->
+    <!-- ============================================ -->
+    <div class="tab-content" data-content="accesos-dc">
+      <div class="accesos-dc-container">
+        
+        <!-- RESTO DE LATAM -->
+        <div class="dc-section">
+          <h3>🌎 ACCESOS - RESTO DE LATAM</h3>
+          <p><strong>Países que se deben generar TICKET:</strong> Panamá, Ecuador, Honduras, Nicaragua, Costa Rica, Salvador</p>
+          
+          <div class="dc-info-box">
+            <h4>📍 VICTORIA PLAZA - PANAMÁ</h4>
+            <p><strong>Horario respuesta datacenter Panamá:</strong> Hasta las 18:00 hora local</p>
+            <p><strong>⚠️ IMPORTANTE:</strong> Después de las 18:00 hora local se crea → Si llegan solicitando como URGENTE generar Ticket</p>
+            <p><strong>Proceso para demás países:</strong></p>
+            <ol>
+              <li>Generar ticket como solicitud SSA</li>
+              <li>Responder al cliente con su número de ticket</li>
+              <li>Se asigna a la vuelta SD</li>
+              <li>Procedemos a escalar a Torre de Control</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- COLOMBIA -->
+        <div class="dc-section">
+          <h3>🇨🇴 ACCESOS COLOMBIA DATACENTER WBP</h3>
+          
+          <div class="dc-info-box">
+            <p><strong>Tipo ticket:</strong> Solicitud SSA</p>
+            <p><strong>Proceso:</strong></p>
+            <ol>
+              <li>Generar ticket como solicitud SSA</li>
+              <li>Se queda con el Ticket el de aperturas</li>
+              <li>Responder al cliente con su número de ticket</li>
+              <li>Envia correos con los formatos a Datacenter IFX</li>
+              <li>Una vez confirmen → Responder al cliente y cerrar TICKET</li>
+            </ol>
+            
+            <p><strong>📧 Correos de IFX:</strong></p>
+            <div class="correo-list">
+              <span class="correo-copiable">datacentercolombia@ifxcorp.com</span>
+              <button class="btn-copy-correo" data-correo="datacentercolombia@ifxcorp.com">📋</button>
+            </div>
+            <div class="correo-list">
+              <span class="correo-copiable">ooangarita@ifxcorp.com</span>
+              <button class="btn-copy-correo" data-correo="ooangarita@ifxcorp.com">📋</button>
+            </div>
+            <div class="correo-list">
+              <span class="correo-copiable">nfmolina@ifxcorp.com</span>
+              <button class="btn-copy-correo" data-correo="nfmolina@ifxcorp.com">📋</button>
+            </div>
+            <div class="correo-list">
+              <span class="correo-copiable">care@ifxcorp.com</span>
+              <button class="btn-copy-correo" data-correo="care@ifxcorp.com">📋</button>
+            </div>
+
+            <div class="script-box">
+              <strong>📝 MENSAJE CORREO AL DATACENTER:</strong>
+              <pre>Estimados Buenas días,
+
+Su apoyo con la siguiente solicitud de accesos,
+
+Se copia a Data Center Colombia en el correo</pre>
+              <button class="btn-copy-script">Copiar mensaje</button>
+            </div>
+
+            <div class="script-box">
+              <strong>⏳ ACCESOS ESPERA - Correo a cliente mientras se espera respuesta de IFX:</strong>
+              <pre>Buenas tardes,
+
+Nos encontramos realizando el proceso para tramitar los accesos. En breves instantes estaremos confirmando los mismos.
+
+Agradecemos su paciencia y quedamos atentos a cualquier novedad.</pre>
+              <button class="btn-copy-script">Copiar mensaje</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHILE -->
+        <div class="dc-section">
+          <h3>🇨🇱 ACCESOS CHILE</h3>
+          
+          <div class="dc-info-box">
+            <p><strong>Actualización en informativo SD:</strong> DATACENTER IFX EL BOSQUE - Datacenter Magnus 2</p>
+            <p><strong>Proceso:</strong></p>
+            <ol>
+              <li>Validar formatos adjuntos</li>
+              <li>Poner en copia a los siguientes correos para llevar a cabo solicitud</li>
+            </ol>
+            
+            <p><strong>📧 Correos CC:</strong></p>
+            <div class="correo-list">
+              <strong>Mauricio Parraguez:</strong>
+              <span class="correo-copiable">mparraguez@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="mparraguez@ufinet.com">📋</button>
+            </div>
+            <div class="correo-list">
+              <strong>Grupo Operaciones Chile:</strong>
+              <span class="correo-copiable">operaciones.cl@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="operaciones.cl@ufinet.com">📋</button>
+            </div>
+            <div class="correo-list">
+              <strong>NOC Chile:</strong>
+              <span class="correo-copiable">noc.cl@ufinet.com</span>
+              <button class="btn-copy-correo" data-correo="noc.cl@ufinet.com">📋</button>
+            </div>
+
+            <div class="script-box">
+              <strong>📝 CORREO DE COPIA:</strong>
+              <pre>Buen día,
+
+Se pone en copia a @Grupo Operaciones Chile para llevar a cabo su solicitud</pre>
+              <button class="btn-copy-script">Copiar mensaje</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARGENTINA -->
+        <div class="dc-section">
+          <h3>🇦🇷 ACCESOS ARGENTINA</h3>
+          
+          <div class="dc-info-box">
+            <p><strong>Proceso:</strong></p>
+            <ol>
+              <li>Solicitando accesos generar ticket como solicitud</li>
+              <li>Responder al cliente con su número de ticket</li>
+              <li>Se asigna a SD</li>
+              <li>Enviar a correo con formatos</li>
+            </ol>
+            
+            <p><strong>📧 Correo:</strong></p>
+            <div class="correo-list">
+              <span class="correo-copiable">dcbsas@ifxcorp.com</span>
+              <button class="btn-copy-correo" data-correo="dcbsas@ifxcorp.com">📋</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLIENTE NO ENVÍA ARCHIVO -->
+        <div class="dc-section importante">
+          <h3>⚠️ CLIENTE NO ENVÍA ARCHIVO DC</h3>
+          
+          <div class="script-box">
+            <strong>📝 Respuesta al cliente:</strong>
+            <pre>Estimados,
+
+Solicitamos su amable colaboración completando el archivo adjunto para proceder con la solicitud de accesos de manera correcta. Agradecemos que la información sea diligenciada en su totalidad para poder gestionar la solicitud de manera eficiente.
+
+Quedamos atentos a cualquier consulta o comentario que puedan tener.</pre>
+            <button class="btn-copy-script">Copiar mensaje</button>
+          </div>
+        </div>
+
+        <!-- ACCESOS AUTORIZADOS -->
+        <div class="dc-section">
+          <h3>✅ ACCESOS AUTORIZADOS</h3>
+          
+          <div class="script-box">
+            <strong>📝 Respuesta al cliente:</strong>
+            <pre>Estimado cliente, buen día.
+
+En seguimiento a su petición, le informamos que los accesos han sido autorizados. A continuación, encontrará la información correspondiente:</pre>
+            <button class="btn-copy-script">Copiar mensaje</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAB 5: CUADROS DE CIERRE -->
+    <!-- ============================================ -->
+    <div class="tab-content" data-content="cierres">
+      <div class="cierres-container">
+        <div class="alert-box importante">
+          <h3>📊 CUADROS DE CIERRE</h3>
+          <p>Todos los cuadros de cierre listados son <strong>NO IMPUTABLE</strong></p>
+        </div>
+
+        <div class="cierre-grid">
+          
+          <div class="cierre-card">
+            <div class="cierre-header">🔄 REESTABLECE SIN INTERVENCIÓN</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No determinada / Desconocida - Reestablece sin intervención</p>
+              <p><strong>Solución:</strong> Sin acciones correctivas</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No determinada / Desconocida - Reestablece sin intervención" data-solucion="Sin acciones correctivas" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">💤 SIN RESPUESTA</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No Aplica / Sin accesos o respuesta</p>
+              <p><strong>Solución:</strong> Sin acciones correctivas</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No Aplica / Sin accesos o respuesta" data-solucion="Sin acciones correctivas" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">❌ MAL REPORTE</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No Aplica / Mal reporte</p>
+              <p><strong>Solución:</strong> No aplica</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No Aplica / Mal reporte" data-solucion="No aplica" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">🔧 VM (VENTANA MANTENIMIENTO)</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No Aplica / VM Notificada</p>
+              <p><strong>Solución:</strong> VM Notificada</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No Aplica / VM Notificada" data-solucion="VM Notificada" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">🔁 TICKET DUPLICADO</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No Aplica / Ticket Duplicado</p>
+              <p><strong>Solución:</strong> Se maneja con el TTTT</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No Aplica / Ticket Duplicado" data-solucion="Se maneja con el TTTT" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">📊 GRÁFICAS DE CONSUMO</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / Solicitudes / Gráficas</p>
+              <p><strong>Solución:</strong> Se procede con el envío de las gráficas</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / Solicitudes / Gráficas" data-solucion="Se procede con el envío de las gráficas" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">🔑 ACCESOS DATACENTER</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / Solicitudes / Otras / Accesos Datacenter</p>
+              <p><strong>Solución:</strong> Accesos autorizados</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / Solicitudes / Otras / Accesos Datacenter" data-solucion="Accesos autorizados" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">🌐 RED COMPLEMENTARIA</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No aplica / Mal Reporte</p>
+              <p><strong>Solución:</strong> Ninguna por parte de Ufinet - Falta de plantilla complementaria y registro fotográfico</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No aplica / Mal Reporte" data-solucion="Ninguna por parte de Ufinet - Falta de plantilla complementaria y registro fotográfico" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">🤝 SOLICITUD PM/KAM</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / Solicitudes / Solicitud área comercial/PM</p>
+              <p><strong>Solución:</strong> Se traslada al cliente, al área Comercial/PM</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / Solicitudes / Solicitud área comercial/PM" data-solucion="Se traslada al cliente, al área Comercial/PM" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+          <div class="cierre-card">
+            <div class="cierre-header">⏸️ SERVICIO SUSPENDIDO</div>
+            <div class="cierre-body">
+              <p><strong>Causa:</strong> Cliente / No aplica / Servicio Suspendido</p>
+              <p><strong>Solución:</strong> No aplica - Se redirige al cliente al área de cartera</p>
+              <p><strong>Imputabilidad:</strong> <span class="badge no-imputable">NO IMPUTABLE</span></p>
+              <button class="btn-copy-cierre" data-causa="Cliente / No aplica / Servicio Suspendido" data-solucion="No aplica - Se redirige al cliente al área de cartera" data-imputable="NO IMPUTABLE">📋 Copiar</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- ===================================================== -->
+<!-- TAB: LLAMADAS DE PRUEBA LATAM -->
+<!-- ===================================================== -->
+<div class="tab-content" data-content="llamadas">
+
+  <div class="llamadas-layout">
+
+    <!-- ================================================= -->
+    <!-- PANEL LATERAL – NÚMEROS DE PRUEBA -->
+    <!-- ================================================= -->
+    <aside class="panel-numeros">
+      <h4>📞 Números de Prueba</h4>
+      <ul class="lista-numeros">
+        <li>
+          <span class="pais">Guatemala (Cabecera)</span>
+          <span class="numero-copiable" data-numero="950223173380">🇬🇹 (Cabecera): 950223173380</span>
+        </li>
+        <li>
+          <span class="pais">EUA</span>
+          <span class="numero-copiable" data-numero="918885441008">🇺🇸: 918885441008</span>
+        </li>
+        <li>
+          <span class="pais">GUATEMALA</span>
+          <span class="numero-copiable" data-numero="950223173333">🇬🇹: 950223173333</span>
+        </li>
+        <li>
+          <span class="pais">EL SALVADOR</span>
+          <span class="numero-copiable" data-numero="950322736750">🇸🇻: 950322736750</span>
+        </li>
+        <li>
+          <span class="pais">HONDURAS</span>
+          <span class="numero-copiable" data-numero="950422710262">🇭🇳: 950422710262</span>
+        </li>
+        <li>
+          <span class="pais">COSTA RICA</span>
+          <span class="numero-copiable" data-numero="950641070333">🇨🇷: 950641070333</span>
+        </li>
+        <li>
+          <span class="pais">PANAMA</span>
+          <span class="numero-copiable" data-numero="95073760101">🇵🇦: 95073760101</span>
+        </li>
+        <li>
+          <span class="pais">COLOMBIA</span>
+          <span class="numero-copiable" data-numero="95753860750">🇨🇴: 95753860750</span>
+        </li>
+        <li>
+          <span class="pais">COLOMBIA ALTERNO</span>
+          <span class="numero-copiable" data-numero="9576017448604">COA: 9576017448604</span>
+        </li>
+        <li>
+          <span class="pais">COL LINEA GRATUITA</span>
+          <span class="numero-copiable" data-numero="95701 8000 910 091">🇨🇴 GRATUITA: 95701 8000 910 091</span>
+        </li>
+        <li>
+          <span class="pais">ECUADOR</span>
+          <span class="numero-copiable" data-numero="9593969640618">🇪🇨: 9593969640618</span>
+        </li>
+        <li>
+          <span class="pais">PERU</span>
+          <span class="numero-copiable" data-numero="95117027124">🇵🇪: 95117027124</span>
+        </li>
+        <li>
+          <span class="pais">MEXICO</span>
+          <span class="numero-copiable" data-numero="9527224810879">🇲🇽: 9527224810879</span>
+        </li>
+        <li>
+          <span class="pais">PARAGUAY</span>
+          <span class="numero-copiable" data-numero="9595 (21) 658 7000">🇵🇾: 9595 (21) 658 7000</span>
+        </li>
+        <li>
+          <span class="pais">PARAGUAY TEISA</span>
+          <span class="numero-copiable" data-numero="9595 (21) 658 7632">🇵🇾: 9595 (21) 658 7632</span>
+        </li>
+        <li>
+          <span class="pais">ARGENTINA</span>
+          <span class="numero-copiable" data-numero="9541152352900">🇵🇾: 9541152352900</span>
+        </li>
+        <li>
+          <span class="pais">CHILE</span>
+          <span class="numero-copiable" data-numero="956228920150">🇨🇱: 956228920150</span>
+        </li>
+          <h2>Linea Reico</h2>
+              <li>
+          <span class="pais">REICO</span>
+          <span class="numero-copiable" data-numero="950641070380">🇨🇷: 950641070380</span>
+              </li>
+
+              <h2>CEC</h2>
+              <li>
+          <span class="pais">GUATEMALA</span>
+          <span class="numero-copiable" data-numero="9502 2317 3366">🇬🇹: 9502 2317 3366</span>
+              </li>
+                <li>
+          <span class="pais">COSTA RICA</span>
+          <span class="numero-copiable" data-numero="9506 4107 0366">🇨🇷: 9506 4107 0366</span>
+              </li>
+                <li>
+          <span class="pais">PANAMA</span>
+          <span class="numero-copiable" data-numero="9507 376 0166">🇵🇦: 9507 376 0166</span>
+              </li>
+                <li>
+          <span class="pais">COLOMBIA</span>
+          <span class="numero-copiable" data-numero="957 53860766">🇨🇴: 957 53860766</span>
+              </li>
+              <li>
+          <span class="pais">HONDURAS</span>
+          <span class="numero-copiable" data-numero="950425441079">🇭🇳: 950425441079</span>
+              </li>
+              <li>
+          <span class="pais">EL SALVADOR</span>
+          <span class="numero-copiable" data-numero="950321367863 ">🇸🇻: 950321367863 </span>
+              </li>
+      </ul>        
+    </aside>
+
+    <!-- ================================================= -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ================================================= -->
+    <section class="llamadas-main">
+
+      <!-- ================= BOTONES ================= -->
+      <div class="llamadas-actions compact">
+        <button id="btn-copiar-tabla-llamadas" class="btn-action primary">
+          📋 Copiar Tabla
+        </button>
+        <button id="btn-limpiar-llamadas" class="btn-action secondary">
+          🗑️ Limpiar
+        </button>
+      </div>
+
+      <!-- ================= TABLA RESULTADOS ================= -->
+      <div class="tabla-llamadas-wrapper">
+
+        <table class="tabla-llamadas">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>PAÍS</th>
+              <th>RESULTADO</th>
+              <th>OBSERVACIONES</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Guatemala (Cabecera)</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>EUA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>GUATEMALA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>EL SALVADOR</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>HONDURAS</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>COSTA RICA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>PANAMA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>8</td>
+            <td>COLOMBIA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>9</td>
+            <td>COLOMBIA ALTERNO</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>10</td>
+            <td>COL LINEA GRATUITA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>11</td>
+            <td>ECUADOR</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>12</td>
+              <td>PERU</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>13</td>
+            <td>MEXICO</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>14</td>
+            <td>PARAGUAY</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>15</td>
+            <td>PARAGUAY TEISA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>16</td>
+            <td>ARGENTINA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>17</td>
+              <td>CHILE</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+
+           <thead>
+            <tr>
+              <th>No</th>
+              <th>LINEA REICO</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <td>1</td>
+           <td>REICO</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>CEC</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <td>1</td>
+           <td>GUATEMALA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>2</td>
+              <td>COSTA RICA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>3</td>
+              <td>PANAMA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>4</td>
+              <td>COLOMBIA</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>5</td>
+              <td>HONDURAS</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+            <td>6</td>
+              <td>EL SALVADOR</td>
+              <td contenteditable class="celda-editable">ok</td>
+              <td contenteditable class="celda-editable observaciones"></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+
+    <!-- ============================================ -->
+    <!-- TAB 6: SOLICITUDES KAM Y PM -->
+    <!-- ============================================ -->
+    <div class="tab-content" data-content="kam-pm">
+      <div class="kam-pm-container">
+        
+        <div class="alert-box importante">
+          <h3>🤝 SOLICITUDES QUE VAN PARA LOS KAM Y PM</h3>
+          <p><strong>Service Desk o N1 NO gestiona estos casos</strong> - Derivar al área correspondiente</p>
+        </div>
+
+        <div class="kam-pm-grid">
+          
+          <!-- KAM -->
+          <div class="kam-pm-card">
+            <div class="card-header administrativo">
+              <span class="icono">👔</span>
+              <h3>Key Account Manager - KAM</h3>
+            </div>
+            <div class="card-body">
+              <p><strong>Los Comerciales o Key Account Manager (KAM) atienden:</strong></p>
+              
+              <div class="tipo-item">
+                <strong>🔄 Gestión de solicitudes y cambios</strong>
+                <p>Evalúa la viabilidad de solicitudes de cambios:</p>
+                <ul>
+                  <li>Mover el servicio de sede</li>
+                  <li>Cambio de equipo (si NO es por falla)</li>
+                  <li>Topología del servicio o de la red</li>
+                  <li>Modificaciones en servicios o productos contratados</li>
+                </ul>
+                <p>Coordina con departamentos internos (soporte técnico y equipos de desarrollo)</p>
+              </div>
+
+              <div class="tipo-item">
+                <strong>📋 Coordinación de proyectos y servicios</strong>
+                <p>Supervisa la entrega de productos o servicios al cliente, asegurando que se cumplan los plazos y niveles de calidad acordados.</p>
+                <p>Trabaja con equipos de operaciones y soporte para garantizar la correcta implementación de soluciones.</p>
+              </div>
+
+              <div class="tipo-item">
+                <strong>💼 Negociación de contratos y acuerdos comerciales</strong>
+                <p>Gestiona las negociaciones de precios, plazos y condiciones de los contratos.</p>
+                <p>Se asegura de que ambas partes estén alineadas en términos de expectativas comerciales.</p>
+              </div>
+
+              <div class="tipo-item">
+                <strong>📊 RESUMEN DE NIVEL DE SERVICIOS (SLA)</strong>
+                <p>Se debe validar con comercial</p>
+                <p>Es un tema de SLA y cumplimiento de que las fallas estén dentro de los tiempos brindados cuando se entregan los servicios</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PM -->
+          <div class="kam-pm-card">
+            <div class="card-header construccion">
+              <span class="icono">👷</span>
+              <h3>PROJECT MANAGER (PM)</h3>
+            </div>
+            <div class="card-body">
+              <p><strong>Los PM atienden:</strong></p>
+              
+              <div class="tipo-item">
+                <strong>🗺️ DIAGRAMA O TOPOLOGÍA DE LA RED</strong>
+                <p>Donde se comprende el servicio que se otorga al cliente</p>
+              </div>
+
+              <div class="tipo-item">
+                <strong>🏗️ SERVICIOS EN CONSTRUCCIÓN</strong>
+                <p>Servicios que están en implementación</p>
+              </div>
+
+              <div class="tipo-item">
+                <strong>📡 INSTALACIONES</strong>
+                <p>Coordinación de instalación de equipos y servicios nuevos</p>
+              </div>
+
+                <div class="tipo-item">
+                <strong>🌐 ANUNCIO POOL DE IP</strong>
+                <p>Cuando quieren anunciar un nuevo Pool de IP</p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAB 7: NOTAS IMPORTANTES -->
+    <!-- ============================================ -->
+    <div class="tab-content" data-content="notas">
+      <div class="notas-container">
+        
+        <div class="nota-importante">
+          <h3>⚠️ VALIDACIONES Y REGLAS OBLIGATORIAS</h3>
+          <ul>
+            <li>✅ <strong>Todos los ID Terminados en E, X:</strong> DEBEN SER VALIDADOS PRIMERO POR N1 (vemos que están escalando directamente a TORRE - esto está mal)</li>
+            <li>✅ <strong>Cuando hay casos resueltos por una master:</strong> Si o si toca crear nuevo caso y que sea imputable a Ufinet</li>
+            <li>✅ <strong>Casos COLOCATION:</strong> Van para TCL - Los tramos aparecen al lado del recuadro de info</li>
+            <li>✅ <strong>CARTERA:</strong> Es para el área de pagos con Ufinet (todo lo relacionado con dinero, SUSPENDIDO)</li>
+          </ul>
+        </div>
+
+        <div class="nota-importante">
+          <h3>🎯 SOLICITUDES ESPECIALES - INFORMACIÓN ADICIONAL</h3>
+          <ul>
+            <li><strong>Si desea adquirir servicios de LATAM:</strong> Se le piden los datos → Se busca el comercial del país → Se le manda correo al comercial con los datos</li>
+            <li><strong>Cliente desea adquirir servicios de REICO:</strong> Se le piden datos (contacto, correo, cel, empresa) → Se escala con <strong>MANUEL BETETA</strong></li>
+            <li><strong>CANCELACIÓN DEL SERVICIO:</strong> Por correo debe de ser con el comercial | Por llamada dirigir al comercial</li>
+            <li><strong>DEMOS de CEC:</strong> Para pruebas de saturación y luego cliente valide si solicita ampliación con el área comercial → Se crea caso sin servicio</li>
+          </ul>
+        </div>
+
+        <div class="nota-importante">
+          <h3>⏱️ TIEMPOS DE RESPUESTA</h3>
+          <ul>
+            <li>📋 <strong>Respuesta de calidad:</strong> 48 horas o 72 horas</li>
+            <li>📊 <strong>RFO (Reporte de falla):</strong> 48-72 horas hábiles</li>
+            <li>🔐 <strong>Credenciales nuevas:</strong> 72 horas</li>
+          </ul>
+        </div>
+
+        <div class="nota-importante">
+          <h3>📧 VENTANAS DE MANTENIMIENTO</h3>
+          <ul>
+            <li><strong>Clientes escriben al NOC a pedir ventana de mantenimiento:</strong></li>
+            <li><strong>CC obligatorios:</strong> (Claudia Bravo Garcia) - notificacionesclusternorte@ufinet.com, noclatam@ufinet.com, Richar Mesias, Colombia - gestiondecambios@ufinet.com,  LATAM - vmprogramada@ufinet.com</li>
+          </ul>
+        </div>
+
+        <div class="nota-importante">
+          <h3>📋 GRÁFICAS Y CONSULTAS</h3>
+          <ul>
+            <li><strong>Solicitud de Gráficas de consumo REICO:</strong> Con WIRELESS</li>
+            <li><strong>Facturación:</strong> facturacionufinet@ufinet.com - Para cobros mal generados sobre la factura</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

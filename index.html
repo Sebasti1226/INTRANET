@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Intranet Corporativa</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <!-- Header con logo y toggle -->
+  <header class="header">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo Intranet">
+      <h1>Intranet Service Desk 🛜</h1>
+    </div> 
+    <button id="theme-toggle">🌙</button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#" data-page="ticket.html">Ticket</a></li>
+      <li><a href="#" data-page="scripts.html">Scripts</a></li>
+      <li><a href="#" data-page="accesos.html">Accesos</a></li>
+      <li><a href="#" data-page="masivos.html">Masivos</a></li>
+      <li><a href="#" data-page="escalacion.html">Escalación</a></li>
+      <li><a href="#" data-page="vips.html">VIPs</a></li>
+      <li><a href="#" data-page="tipos-reporte.html">Tipos de Reporte</a></li>
+      <!-- <li><a href="#" data-page="manuales.html">Manuales</a></li> -->
+    </ul>
+  </nav>
+
+  <!-- Contenido dinámico -->
+  <main id="content">
+    <h2>Bienvenido a la Intranet</h2>
+    <p>Selecciona un módulo del menú para comenzar.</p>
+  </main>
+  
+  <footer class="footer">
+    <p>© 2025 Intranet Corporativa | SERVICE DESK 😎</p>
+  </footer>
+
+  <!-- Librerías para manejo de archivos -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.min.js"></script>
+  
+  <script src="assets/script.js"></script>
+
+</body>
+</html>

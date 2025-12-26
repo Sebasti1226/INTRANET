@@ -1,0 +1,54 @@
+<!-- === pages/ticket.html === -->
+<div class="ticket-container">
+  <h2>Creación de Ticket</h2>
+  <form>
+
+    <div class="input-group">
+      <label for="ticket">Número de Ticket:</label>
+      <input type="text" id="ticket" placeholder="Ingrese el ticket">
+    </div>
+
+    <div class="input-group">
+      <label for="idioma">Idioma:</label>
+      <select id="idioma">
+        <option value="">Seleccione</option>
+        <option value="espanol">Español</option>
+        <option value="ingles">Inglés</option>
+        <option value="portugues">Português (Brasil)</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="ingeniero">Ingeniero SD:</label>
+      <select id="ingeniero">
+        <option value="">Seleccione un ingeniero</option>
+        <option value="B. Alejandro Sanchez Campo">B. Alejandro Sanchez Campo</option>
+        <option value="Diego A. Cabrera Muñoz">Diego A. Cabrera Muñoz</option>
+        <option value="Franklin G. Pipicano Correa">Franklin G. Pipicano Correa</option>
+        <option value="Gustavo A. Torres Guevara">Gustavo A. Torres Guevara</option>
+        <option value="Jarby A. Castillo Arango">Jarby A. Castillo Arango</option>
+        <option value="Jesus D. Botero Osorio">Jesus D. Botero Osorio</option>
+        <option value="Jose A. Colorado Gonzalez">Jose A. Colorado Gonzalez</option>
+        <option value="Jose E. Castaño Tapiero">Jose E. Castaño Tapiero</option>
+        <option value="Juan Pablo Correa Botero">Juan Pablo Correa Botero</option>
+        <option value="Julian E. Monpotes Quira">Julian E. Monpotes Quira</option>
+        <option value="M. Daniel Quiñones Tovar">M. Daniel Quiñones Tovar</option>
+        <option value="Marco A. Galindo Galviz">Marco A. Galindo Galviz</option>
+        <option value="Mayra A. Estrada Valencia">Mayra A. Estrada Valencia</option>
+        <option value="Rafael E. Cabrera Penna">Rafael E. Cabrera Penna</option>
+        <option value="Sebastian Palomino Zapata">Sebastian Palomino Zapata</option>
+        <option value="Yeniffer A. Murillo Naspiran">Yeniffer A. Murillo Naspiran</option>
+        <option value="Yulian G. Berrio Noguera">Yulian G. Berrio Noguera</option>
+      </select>
+    </div>
+
+    <div id="mensaje" class="mensaje-recuadro"></div>
+
+    <div class="buttons">
+      <button type="button" id="generarBtn">Generar</button>
+      <button type="button" id="copiarBtn">Copiar</button>
+      <button type="button" id="borrarBtn">Borrar</button>
+    </div>
+  </form>
+
+</div>
