@@ -1937,159 +1937,119 @@ body.dark #visor-pdf-wrapper {
 /* =====================================================
    LAYOUT GENERAL LLAMADAS DE PRUEBAS
 ===================================================== */
-
-.llamadas-layout {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 20px;
+.llamadas-container {
+  max-width: 1000px;
+  margin: auto;
 }
 
-/* =====================================================
-   PANEL LATERAL DE NÚMEROS
-===================================================== */
-
-.panel-numeros {
-  background: var(--bg-card);
-  border: 4px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.panel-numeros h4 {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-.panel-numeros h2 {
-  font-size: 20px;
-  margin-bottom: 6px;
-  margin-top: 20px;
-}
-
-.lista-numeros {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.lista-numeros li {
+.acciones {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 2px solid #e5e5e5;
-  font-size: 14px;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
-.lista-numeros li:last-child {
-  border-bottom: none;
-}
-
-.lista-numeros .pais {
-  font-weight: 700;
-}
-
-
-
-
-/* =====================================================
-   NÚMERO COPIABLE
-===================================================== */
-
-.numero-copiable {
-  font-family: "Courier New", monospace;
-  font-size: 14px;
-  padding: 2px 6px;
-  border: 1px solid #bfbfbf;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s;
-}
-
-.numero-copiable:hover {
-  background: var(--primary);
-  color: #fff;
-}
-
-/* =====================================================
-   BOTONES
-===================================================== */
-
-.llamadas-actions.compact {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 15px;
-}
-
-.llamadas-actions.compact .btn-action {
-  min-width: auto;
-  padding: 10px 15px;
-  font-size: 16px;
-}
-
-/* =====================================================
-   TABLA RESULTADOS
-===================================================== */
-
-.tabla-llamadas-wrapper {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px;
+.tabla-wrapper {
+  background: white;
+  padding: 8px;
+  border-radius: 6px;
 }
 
 .tabla-llamadas {
   width: 100%;
   border-collapse: collapse;
-  font-size: 16px;
-}
-
-.tabla-llamadas thead {
-  background: #f2f2f2;
+  font-size: 13px;
 }
 
 .tabla-llamadas th {
-  padding: 6px 8px;
-  font-size: 14px;
-  font-size: 18px;
-  border: 1px solid #bfbfbf;
-  text-align: left;
+  background: #004b87;
+  color: white;
+  padding: 6px 10px;
+  border: 1px solid #000;
 }
 
 .tabla-llamadas td {
-  padding: 4px 6px;
-  border: 1px solid #bfbfbf;
+  padding: 6px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
 }
 
-.tabla-llamadas tbody tr:nth-child(even) {
-  background: #fafafa;
+/* Celdas NO editables */
+.tabla-llamadas .fixed {
+  background: #f1f5f9;
+  font-weight: 600;
+  cursor: default;
 }
 
-/* =====================================================
-   CELDAS EDITABLES
-===================================================== */
-
-.celda-editable {
-  min-height: 100px;
-  padding: 2px 4px;
+/* Número copiable */
+.tabla-llamadas .numero {
+  cursor: pointer;
+  color: #0d6efd;
 }
 
-.celda-editable.observaciones {
-  min-width: 300px;
+.tabla-llamadas .numero:hover {
+  text-decoration: underline;
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 900px) {
-  .llamadas-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .llamadas-actions.compact {
-    justify-content: center;
-  }
+/* ===== COLORES POR RESULTADO ===== */
+.result-ok {
+  background-color: #e8f7ee !important; /* verde claro */
 }
+
+.result-no {
+  background-color: #fdeaea !important; /* rojo claro */
+}
+
+.result-falla {
+  background-color: #fff4e5 !important; /* naranja claro */
+}
+
+/* Número copiable (sin ícono) */
+.tabla-llamadas .numero {
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.tabla-llamadas .numero:hover {
+  text-decoration: underline;
+}
+
+/* Forzar visibilidad en capturas */
+.tabla-llamadas td.fixed {
+  background-color: #e6f9f0 !important;
+  color: #000 !important;
+}
+
+.copy-feedback {
+  position: absolute;
+  background: #198754;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  opacity: 0;
+  transform: translateY(-5px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.copy-feedback.show {
+  opacity: 1;
+  transform: translateY(-15px);
+}
+
+.btn-feedback {
+  background-color: #198754 !important;
+  color: #fff !important;
+  transition: background-color 0.3s ease;
+}
+
+.tabla-llamadas td.pais {
+  background-color: #eef8f3 !important;
+  color: #000 !important;
+  font-weight: 600;
+  text-align: left; /* 👈 importante, NO center */
+  padding-left: 10px;
+}
+
