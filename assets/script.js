@@ -789,42 +789,63 @@ function initEscalacion() {
   };
 
   // ==================== LLENAR FORMULARIO ====================
-  btnEscalacionLoad.addEventListener("click", () => {
-    const valores = escalacionInput.value
-      .trim()
-      .split(/\t|,|\n/)
-      .map(v => v.trim());
+btnEscalacionLoad.addEventListener("click", () => {
+  let texto = escalacionInput.value.trim();
 
-    const mapeo = {
-      ticket: valores[0] || "",
-      id: valores[1] || "",
-      fecha: valores[2] || "",
-      origen: valores[3] || "",
-      cliente: valores[4] || "",
-      servicio: valores[5] || "",
-      problema: valores[6] || "",
-      tramos: valores[7] && valores[8]
-        ? `${valores[7]} | ${valores[8]}`
-        : valores[7] || valores[8] || "",
-      detalles: "",
-      "ing-sd": valores[10] || "",
-      "ing-tdc": ""
-    };
+  // Normalizar espacios múltiples
+  texto = texto.replace(/\s{2,}/g, "\t");
 
-    document.querySelectorAll("[data-field]").forEach(elem => {
-      const field = elem.getAttribute("data-field");
-      if (!(field in mapeo)) return;
+  const valores = texto
+    .split(/\t|,|\n/)
+    .map(v => v.trim())
+    .filter(v => v !== "");
 
-      if (elem.tagName === "SELECT") {
-        const opt = Array.from(elem.options).find(o =>
-          o.value.toLowerCase() === mapeo[field].toLowerCase()
-        );
-        elem.value = opt ? opt.value : "";
-      } else {
-        elem.value = mapeo[field];
-      }
-    });
+  /*
+    ORDEN ESPERADO:
+    0 Ticket
+    1 Fecha
+    2 Origen
+    3 ID
+    4 Cliente
+    5 Tipo Servicio
+    6 Problema
+    7 Tramo 1
+    8 Tramo 2
+    9 Extra (No / Sí)
+    10 Ingeniero SD
+  */
+
+  const mapeo = {
+    ticket: valores[0] || "",
+    fecha: valores[1] || "",
+    origen: valores[2] || "",
+    id: valores[3] || "",
+    cliente: valores[4] || "",
+    servicio: valores[5] || "",
+    problema: valores[6] || "",
+    tramos: valores[7] && valores[8]
+      ? `${valores[7]} | ${valores[8]}`
+      : valores[7] || valores[8] || "",
+    detalles: "",
+    "ing-sd": valores[10] || "",
+    "ing-tdc": ""
+  };
+
+  document.querySelectorAll("[data-field]").forEach(elem => {
+    const field = elem.getAttribute("data-field");
+    if (!(field in mapeo)) return;
+
+    if (elem.tagName === "SELECT") {
+      const opt = Array.from(elem.options).find(o =>
+        o.value.toLowerCase() === mapeo[field].toLowerCase()
+      );
+      elem.value = opt ? opt.value : "";
+    } else {
+      elem.value = mapeo[field];
+    }
   });
+});
+
 
   // ==================== LIMPIAR TODO ====================
   btnEscalacionClear.addEventListener("click", () => {
@@ -848,17 +869,19 @@ function initEscalacion() {
     }
 
     // ---------- CONDICIONALES TIPO SERVICIO ----------
-let tipoServicio = datos.servicio || "";
+// ---------- CONDICIONALES TIPO SERVICIO (FIX DEFINITIVO) ----------
+let tipoServicio = "";
 
 const clienteNormalizado = (datos.cliente || "")
   .toLowerCase()
+  .replace(/\s+/g, " ")
   .trim();
 
 const textoGlobal = Object.values(datos)
   .join(" ")
   .toLowerCase();
 
-// 1️⃣ PRIORIDAD ALTA – CLIENTES ESPECIALES
+// PRIORIDAD 1 – CLIENTES ESPECIALES
 if (
   clienteNormalizado.includes("redes y telecomunicaciones") ||
   clienteNormalizado.includes("ifx networks")
@@ -866,7 +889,7 @@ if (
   tipoServicio = "Red Complementaria";
 }
 
-// 2️⃣ PRIORIDAD MEDIA – PALABRAS CLAVE (solo si no se definió antes)
+// PRIORIDAD 2 – PALABRAS CLAVE
 else if (textoGlobal.includes("accesos")) {
   tipoServicio = "Accesos";
 }
@@ -876,6 +899,12 @@ else if (textoGlobal.includes("alarma")) {
 else if (textoGlobal.includes("proactivo")) {
   tipoServicio = "Proactivo O&M";
 }
+
+// PRIORIDAD 3 – FALLBACK
+else {
+  tipoServicio = datos.servicio || "";
+}
+
 
 
     const idioma = escalacionIdioma?.value || "es";
@@ -1404,7 +1433,7 @@ function initTiposReporte() {
   const tabContents = document.querySelectorAll(".tab-content");
 
   if (!buscarInput) {
-    console.warn("⚠️ Elementos del módulo Tipos de Reporte no encontrados");
+    console.warn("⚠️ Tipos de Reporte no encontrado");
     return;
   }
 
@@ -1462,33 +1491,19 @@ function initTiposReporte() {
   });
 
   // ==================== SISTEMA DE TABS ====================
-  tabBtns.forEach(btn => {
+ tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-      const targetTab = btn.getAttribute("data-tab");
-      
-      // Remover active de todos
+      const target = btn.dataset.tab;
+
       tabBtns.forEach(b => b.classList.remove("active"));
       tabContents.forEach(c => c.classList.remove("active"));
-      
-      // Activar el seleccionado
-      btn.classList.add("active");
-      const targetContent = document.querySelector(`[data-content="${targetTab}"]`);
-      if (targetContent) {
-        targetContent.classList.add("active");
-      }
 
-      // Limpiar búsqueda al cambiar de tab
-      buscarInput.value = "";
-      const todosLosElementos = document.querySelectorAll(".categoria-card, .correo-item, .estado-card, .dc-section, .cierre-card, .kam-pm-card, .nota-importante");
-      todosLosElementos.forEach(el => {
-        el.style.display = "";
-        el.style.border = "";
-        el.style.transform = "";
-      });
-      
-      const mensajeNoResultados = document.getElementById("no-resultados-msg");
-      if (mensajeNoResultados) {
-        mensajeNoResultados.remove();
+      btn.classList.add("active");
+      document.querySelector(`[data-content="${target}"]`)?.classList.add("active");
+
+      // 🔴 CLAVE: inicializar llamadas SOLO cuando se abre su tab
+      if (target === "llamadas") {
+        initLlamadasPrueba();
       }
     });
   });
@@ -1608,73 +1623,138 @@ Imputabilidad: ${imputable}`;
 
 
 // ==================== LLAMADAS DE PRUEBA ====================
+function initLlamadasPrueba() {
 
-// Copiar SOLO el número
-document.querySelectorAll(".numero-copiable").forEach(numero => {
-  numero.addEventListener("click", () => {
-    const numeroTexto = numero.getAttribute("data-numero");
+  const tabla = document.getElementById("tabla-llamadas");
+  const body = document.getElementById("llamadas-body");
 
-    navigator.clipboard.writeText(numeroTexto).then(() => {
-      const bg = numero.style.background;
-      const color = numero.style.color;
+  if (!tabla || !body) {
+    console.warn("⚠️ Tabla de Llamadas no encontrada");
+    return;
+  }
 
-      numero.style.background = "#28a745";
-      numero.style.color = "white";
+  // ===== BOTONES =====
+  const btnCopy = document.getElementById("btn-llamadas-copy");
+  const btnImage = document.getElementById("btn-llamadas-image");
+  const btnClear = document.getElementById("btn-llamadas-clear");
 
-      setTimeout(() => {
-        numero.style.background = bg;
-        numero.style.color = color;
-      }, 1200);
-    });
+
+ // ================= COPIAR NÚMERO CON FEEDBACK =================
+body.onclick = (e) => {
+  const td = e.target.closest(".numero");
+  if (!td) return;
+
+  const numero = td.dataset.numero || td.textContent.trim();
+  navigator.clipboard.writeText(numero);
+
+  // Feedback visual
+  let feedback = document.createElement("div");
+  feedback.className = "copy-feedback";
+  feedback.textContent = "Copiado ✓";
+
+  td.style.position = "relative";
+  td.appendChild(feedback);
+
+  requestAnimationFrame(() => feedback.classList.add("show"));
+
+  setTimeout(() => {
+    feedback.classList.remove("show");
+    setTimeout(() => feedback.remove(), 300);
+  }, 900);
+};
+
+
+  // ================= COLOREAR FILAS =================
+body.querySelectorAll("tr").forEach(row => {
+  const resultadoCell = row.cells[3]; // columna Resultado
+  if (!resultadoCell) return;
+
+  resultadoCell.addEventListener("input", () => {
+    const value = resultadoCell.textContent.trim().toLowerCase();
+
+    // limpiar estados previos
+    resultadoCell.classList.remove(
+      "result-ok",
+      "result-no",
+      "result-falla"
+    );
+
+    if (value.includes("ok")) {
+      resultadoCell.classList.add("result-ok");
+    } else if (value.includes("no")) {
+      resultadoCell.classList.add("result-no");
+    } else if (value.includes("falla") || value.includes("error")) {
+      resultadoCell.classList.add("result-falla");
+    }
   });
 });
 
-// Copiar tabla COMPLETA en formato EXCEL
-const btnCopiarTablaLlamadas = document.getElementById("btn-copiar-tabla-llamadas");
 
-if (btnCopiarTablaLlamadas) {
-  btnCopiarTablaLlamadas.addEventListener("click", () => {
-    const tablas = document.querySelectorAll(".tabla-llamadas");
-    let html = "";
+function showButtonFeedback(btn, text = "✓") {
+  const original = btn.innerHTML;
+  btn.classList.add("btn-feedback");
+  btn.innerHTML = text;
 
-    tablas.forEach(tabla => {
-      const titulo = tabla.previousElementSibling?.outerHTML || "";
-      html += titulo;
-      html += tabla.outerHTML;
-      html += "<br>";
-    });
-
-    navigator.clipboard.write([
-      new ClipboardItem({
-        "text/html": new Blob([html], { type: "text/html" }),
-        "text/plain": new Blob([html.replace(/<[^>]*>/g, "")], { type: "text/plain" })
-      })
-    ]).then(() => {
-      const original = btnCopiarTablaLlamadas.textContent;
-      btnCopiarTablaLlamadas.textContent = "✅ Copiado (Excel)";
-      btnCopiarTablaLlamadas.style.background = "#28a745";
-
-      setTimeout(() => {
-        btnCopiarTablaLlamadas.textContent = original;
-        btnCopiarTablaLlamadas.style.background = "";
-      }, 2000);
-    });
-  });
+  setTimeout(() => {
+    btn.classList.remove("btn-feedback");
+    btn.innerHTML = original;
+  }, 900);
 }
 
-// Limpiar resultados
-const btnLimpiarLlamadas = document.getElementById("btn-limpiar-llamadas");
 
-if (btnLimpiarLlamadas) {
-  btnLimpiarLlamadas.addEventListener("click", () => {
-    if (confirm("¿Estás seguro de limpiar todos los resultados y observaciones?")) {
-      document.querySelectorAll(".celda-editable").forEach(celda => {
-        celda.textContent = "";
-      });
-    }
+  // ================= COPIAR EXCEL =================
+btnCopy.onclick = async () => {
+  await navigator.clipboard.write([
+    new ClipboardItem({
+      "text/html": new Blob([tabla.innerHTML], { type: "text/html" }),
+      "text/plain": new Blob([tabla.innerText], { type: "text/plain" })
+    })
+  ]);
+
+  showButtonFeedback(btnCopy, "Copiado ✓");
+};
+
+
+  // ================= COPIAR IMAGEN =================
+btnImage.onclick = async () => {
+  const canvas = await html2canvas(tabla, {
+  scale: 3,
+  backgroundColor: "#ffffff",
+  useCORS: true,
+  letterRendering: true
+});
+
+  const blob = await new Promise(r => canvas.toBlob(r));
+  await navigator.clipboard.write([
+    new ClipboardItem({ "image/png": blob })
+  ]);
+
+  showButtonFeedback(btnImage, "Imagen ✓");
+};
+
+
+
+  // ================= LIMPIAR =================
+btnClear.onclick = () => {
+  body.querySelectorAll("tr").forEach(row => {
+    const resultadoCell = row.cells[3];
+    const obsCell = row.cells[4];
+
+    resultadoCell.textContent = "";
+    obsCell.textContent = "";
+
+    resultadoCell.classList.remove(
+      "result-ok",
+      "result-no",
+      "result-falla"
+    );
   });
-}
+
+  showButtonFeedback(btnClear, "Limpio ✓");
+};
+
 
 
   console.log("✅ Módulo Tipos de Reporte (completo) inicializado");
+}
 }
